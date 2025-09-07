@@ -399,15 +399,6 @@ graph TD
 
 ---
 
-## 👥 Équipe de Développement
-
-- **Fournier Yael** - Développement Frontend
-- **Ribatchenko Carel** - Architecture Backend
-- **Raignault Joann** - API et Base de données
-- **Dimba-Lau Rocma** - Intégration et Tests
-
----
-
 ## 📞 Support et Contribution
 
 Pour toute question, suggestion ou contribution :
