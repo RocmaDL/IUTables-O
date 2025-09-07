@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUTables'O - Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">IUTables'O</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="login.html" id="loginLink">Connexion</a>
+                <a class="nav-link" href="register.html" id="registerLink">Inscription</a>
+                <a class="nav-link d-none" href="profile.html" id="profileLink">Profil</a>
+                <a class="nav-link d-none" href="/api/auth.php?action=logout" id="logoutLink"> Deconnexion</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="row" id="restaurantsContainer"></div>
+        <div id="loading" class="text-center my-4 d-none">
+            <div class="spinner-border text-primary" role="status"></div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        let currentPage = 1;
+        let isLoading = false;
+        let userFavorites = []; // Variable globale pour stocker les favoris de l'utilisateur
+
+        async function loadUserFavorites() {
+            const user = await checkAuthStatus();
+            if (user) {
+                try {
+                    const resp = await fetch(`/api/aime.php?idU=${user.id}`);
+                    const favorites = await resp.json();
+                    userFavorites = favorites.map(fav => Number(fav.idR));
+                } catch (error) {
+                    console.error('Erreur lors du chargement des favoris:', error);
+                }
+            }
+        }
+
+        async function loadRestaurants() {
+            if (isLoading) return;
+            isLoading = true;
+            document.getElementById('loading').classList.remove('d-none');
+
+            try {
+                const response = await fetch(`/api/restaurant.php?page=${currentPage}&limit=30`);
+                const restaurants = await response.json();
+
+                if (restaurants.length > 0) {
+                    restaurants.forEach(restaurant => {
+                        const card = createRestaurantCard(restaurant);
+                        document.getElementById('restaurantsContainer').appendChild(card);
+                    });
+                    currentPage++;
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+
+            isLoading = false;
+            document.getElementById('loading').classList.add('d-none');
+        }
+
+        function createRestaurantCard(restaurant) {
+            // Détermine si le restaurant est favori
+            const isFav = userFavorites.includes(Number(restaurant.id));
+            const favIcon = isFav 
+                ? '<i class="bi bi-heart-fill text-danger favorite-icon" data-id="'+restaurant.id+'" style="cursor:pointer;"></i>' 
+                : '<i class="bi bi-heart text-danger favorite-icon" data-id="'+restaurant.id+'" style="cursor:pointer;"></i>';
+
+            const cuisineList = restaurant.cuisine ? restaurant.cuisine.replace(/[{}]/g, '').split(',') : [];
+            const cuisineBadges = cuisineList.map(type => `<span class="badge bg-primary me-1">${type.trim()}</span>`).join('');
+            const div = document.createElement('div');
+            div.className = 'col-md-4 mb-4';
+            div.innerHTML = `
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">${restaurant.name} ${favIcon}</h5>
+                        <div class="mb-2">${cuisineBadges}</div>
+                        <p class="card-text">${restaurant.description || ''}</p>
+                        <a href="restaurant-details.html?id=${restaurant.id}" class="btn btn-primary">Voir détails</a>
+                    </div>
+                </div>
+            `;
+            return div;
+        }
+
+        document.addEventListener("DOMContentLoaded", async function () {
+            await loadUserFavorites(); // Charge les favoris avant de créer les cards
+            window.addEventListener('scroll', () => {
+                if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 500) {
+                    loadRestaurants();
+                }
+            });
+            // Chargement initial après le chargement du DOM
+            checkAuthStatus();
+            loadRestaurants();
+        });
+
+        // Gestion des favoris
+        document.addEventListener('click', async (e) => {
+            if (e.target.classList.contains('favorite-icon')) {
+                const restaurantId = e.target.dataset.id;
+                const isFavorite = e.target.classList.contains('bi-heart-fill');
+                const user = await checkAuthStatus();
+
+                try {
+                    const response = await fetch('/api/aime.php', {
+                        method: isFavorite ? 'DELETE' : 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ idR: restaurantId, idU: user.id })
+                    });
+
+                    if (response.ok) {
+                        e.target.classList.toggle('bi-heart-fill');
+                        e.target.classList.toggle('bi-heart');
+                        e.target.style.color = isFavorite ? 'gray' : 'red';
+                    }
+                } catch (error) {
+                    console.error('Erreur:', error);
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IUTables'O - Accueil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">IUTables'O</a>
+            <div class="navbar-nav">
+                <a class="nav-link" href="login.html" id="loginLink">Connexion</a>
+                <a class="nav-link" href="register.html" id="registerLink">Inscription</a>
+                <a class="nav-link d-none" href="profile.html" id="profileLink">Profil</a>
+                <a class="nav-link d-none" href="/api/auth.php?action=logout" id="logoutLink"> Deconnexion</a>
+            </div>
+        </div>
+    </nav>
+    <div class="container mt-4">
+        <div id="restaurantDetails"></div>
+        <div class="ratio ratio-16x9 my-4">
+            <div id="map"></div>
+        </div>
+        <h4>Critiques</h4>
+        <div id="reviews"></div>
+        <form id="reviewForm" class="mt-4 d-none">
+            <div class="mb-3">
+                <label class="form-label">Note (1-5)</label>
+                <input type="number" class="form-control" min="1" max="5" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Commentaire</label>
+                <textarea class="form-control" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Envoyer</button>
+        </form>
+    </div>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/app.js"></script>
+    <script>
+        async function loadRestaurantDetails() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const restaurantId = urlParams.get('id');
+            try {
+                const response = await fetch(`/api/restaurant.php?id=${restaurantId}`);
+                const restaurant = await response.json();
+                const reviewsResponse = await fetch(`/api/avis.php?idR=${restaurantId}`);
+                const reviewsData = await reviewsResponse.json();
+                const reviews = Array.isArray(reviewsData) ? reviewsData : [];
+                let totalNote = 0;
+                reviews.forEach(r => totalNote += Number(r.note));
+                const avgNote = reviews.length ? (totalNote / reviews.length).toFixed(1) : 'Non noté';
+                const cuisineList = restaurant.cuisine ? restaurant.cuisine.replace(/[{}]/g, '').split(',') : [];
+                const cuisineBadges = cuisineList.map(tag => `<span class="badge bg-primary me-1">${tag.trim()}</span>`).join('');
+                document.getElementById('restaurantDetails').innerHTML = `
+      <h2 id="restaurantTitle">${restaurant.name}</h2>
+      <div>${cuisineBadges}</div>
+      <p>${restaurant.address || ''}</p>
+      <p>Note moyenne : ${avgNote}</p>
+    `;
+                const shape = JSON.parse(restaurant.geo_shape);
+                const coords = shape.geometry.coordinates;
+                const map = L.map('map').setView([coords[1], coords[0]], 13);
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                L.marker([coords[1], coords[0]]).addTo(map);
+                function generateStars(note) {
+                    let starsHtml = '';
+                    const fullStars = Math.floor(note);
+                    const halfStar = (note - fullStars) >= 0.5;
+                    for (let i = 0; i < fullStars; i++) {
+                        starsHtml += '<i class="bi bi-star-fill text-warning"></i>';
+                    }
+                    if (halfStar) {
+                        starsHtml += '<i class="bi bi-star-half text-warning"></i>';
+                    }
+                    const emptyStars = 5 - fullStars - (halfStar ? 1 : 0);
+                    for (let i = 0; i < emptyStars; i++) {
+                        starsHtml += '<i class="bi bi-star text-warning"></i>';
+                    }
+                    return starsHtml;
+                }
+                let reviewsHtml = reviews.map(review => `
+      <div class="card mb-3">
+        <div class="card-body">
+          <div>${generateStars(review.note)} <strong>${review.note}/5</strong></div>
+          <p class="card-text mt-2">${review.critique}</p>
+        </div>
+      </div>
+    `).join('');
+                document.getElementById('reviews').innerHTML = reviewsHtml;
+                checkAuthStatus().then(user => {
+                    if (user) {
+                        fetch(`/api/aime.php?idU=${user.id}`)
+                            .then(res => res.json())
+                            .then(favorites => {
+                                let isFavorite = favorites.some(fav => Number(fav.idR) === Number(restaurantId));
+                                const favBtnHtml = `<button id="favoriteBtn" class="btn btn-link p-0" style="font-size:1.5rem; color: red;">
+            ${isFavorite ? '<i class="bi bi-heart-fill"></i>' : '<i class="bi bi-heart"></i>'}
+          </button>`;
+                                const titleElem = document.getElementById('restaurantTitle');
+                                titleElem.innerHTML += ' ' + favBtnHtml;
+                                document.getElementById('favoriteBtn').addEventListener('click', async function (e) {
+                                    e.preventDefault();
+                                    try {
+                                        if (isFavorite) {
+                                            const resp = await fetch('/api/aime.php', {
+                                                method: 'DELETE',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ idR: restaurantId })
+                                            });
+                                            if (resp.ok) {
+                                                isFavorite = false;
+                                                this.innerHTML = '<i class="bi bi-heart"></i>';
+                                            }
+                                        } else {
+                                            const resp = await fetch('/api/aime.php', {
+                                                method: 'POST',
+                                                headers: { 'Content-Type': 'application/json' },
+                                                body: JSON.stringify({ idR: restaurantId })
+                                            });
+                                            if (resp.ok) {
+                                                isFavorite = true;
+                                                this.innerHTML = '<i class="bi bi-heart-fill"></i>';
+                                            }
+                                        }
+                                    } catch (err) {
+                                        console.error('Erreur lors de la modification du favori:', err);
+                                    }
+                                });
+                            });
+                    }
+                });
+                checkAuthStatus().then(user => {
+                    if (user) {
+                        const myReview = reviews.find(r => Number(r.idU) === Number(user.id));
+                        if (myReview) {
+                            document.getElementById('reviewForm').querySelector('input').value = myReview.note;
+                            document.getElementById('reviewForm').querySelector('textarea').value = myReview.critique;
+                            document.getElementById('reviewForm').querySelector('button').innerText = 'Mettre à jour';
+                            document.getElementById('reviewForm').dataset.reviewId = myReview.id;
+                        }
+                        document.getElementById('reviewForm').classList.remove('d-none');
+                    }
+                });
+                document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const note = parseInt(e.target.querySelector('input').value, 10);
+                    const critique = e.target.querySelector('textarea').value;
+                    const payload = { idR: restaurantId, note, critique };
+                    try {
+                        let response, result;
+                        if (e.target.dataset.reviewId) {
+                            response = await fetch(`/api/avis.php?id=${e.target.dataset.reviewId}`, {
+                                method: 'PUT',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+                            result = await response.json();
+                        } else {
+                            response = await fetch('/api/avis.php', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify(payload)
+                            });
+                            result = await response.json();
+                        }
+                        if (response.ok && (result.id || result.updated)) {
+                            location.reload();
+                        } else {
+                            console.error('Erreur d’envoi :', result);
+                        }
+                    } catch (error) {
+                        console.error('Erreur:', error);
+                    }
+                });
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        }
+        loadRestaurantDetails();
+    </script>
+</body>
+
+</html>

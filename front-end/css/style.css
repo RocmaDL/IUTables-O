@@ -1,0 +1,16 @@
+.favorite-icon {
+    transition: color 0.3s ease;
+}
+
+#map {
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
