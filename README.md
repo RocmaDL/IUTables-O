@@ -9,8 +9,6 @@
 5. [Guide d'Utilisation](#guide-dutilisation)
 6. [Architecture du Projet](#architecture-du-projet)
 7. [Documentation API](#documentation-api)
-8. [Équipe de Développement](#équipe-de-développement)
-
 ---
 
 ## 🎯 Vue d'ensemble
