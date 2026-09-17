@@ -1,0 +1,464 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-17T09:00:41.966469+00:00",
+  "title": "Design System: IUTables'O",
+  "extensions": {
+    "colorMeta": {
+      "nuit-afficheur": {
+        "role": "neutral",
+        "displayName": "Nuit afficheur",
+        "canonical": "oklch(20.1% 0.058 266)",
+        "tonalRamp": [
+          "#050a1a",
+          "#182341",
+          "#344161",
+          "#526183",
+          "#7282a6",
+          "#94a5ca",
+          "#b8c9f0",
+          "#e4efff"
+        ]
+      },
+      "nuit-ligne-alternee": {
+        "role": "neutral",
+        "displayName": "Nuit ligne alternée",
+        "canonical": "oklch(22.8% 0.066 266)",
+        "tonalRamp": [
+          "#050a1c",
+          "#162345",
+          "#324165",
+          "#506087",
+          "#7082ab",
+          "#92a5cf",
+          "#b5c9f5",
+          "#e2efff"
+        ]
+      },
+      "nuit-panneau": {
+        "role": "neutral",
+        "displayName": "Nuit panneau",
+        "canonical": "oklch(23.8% 0.071 266)",
+        "tonalRamp": [
+          "#040a1d",
+          "#152347",
+          "#304068",
+          "#4e608a",
+          "#6e82ae",
+          "#90a5d2",
+          "#b4c9f8",
+          "#e1efff"
+        ]
+      },
+      "nuit-survol": {
+        "role": "neutral",
+        "displayName": "Nuit survol",
+        "canonical": "oklch(28.2% 0.077 265)",
+        "tonalRamp": [
+          "#030a1e",
+          "#12224a",
+          "#2d406b",
+          "#4b608d",
+          "#6b82b1",
+          "#8da5d6",
+          "#b1c9fc",
+          "#dfefff"
+        ]
+      },
+      "filet": {
+        "role": "neutral",
+        "displayName": "Filet",
+        "canonical": "oklch(33.3% 0.078 265)",
+        "tonalRamp": [
+          "#03091f",
+          "#12224a",
+          "#2d406b",
+          "#4b608e",
+          "#6b82b2",
+          "#8da5d7",
+          "#b0c9fd",
+          "#dfefff"
+        ]
+      },
+      "filet-champ": {
+        "role": "neutral",
+        "displayName": "Filet de champ",
+        "canonical": "oklch(55.6% 0.075 268)",
+        "tonalRamp": [
+          "#04091e",
+          "#152249",
+          "#30406a",
+          "#4e608c",
+          "#6e81b0",
+          "#90a4d5",
+          "#b4c8fb",
+          "#e1eeff"
+        ]
+      },
+      "gris-non-renseigne": {
+        "role": "neutral",
+        "displayName": "Gris non renseigné",
+        "canonical": "oklch(65.8% 0.053 267)",
+        "tonalRamp": [
+          "#060a19",
+          "#1a243f",
+          "#35415f",
+          "#546180",
+          "#7482a3",
+          "#96a5c7",
+          "#bac9ed",
+          "#e5eeff"
+        ]
+      },
+      "bleu-gris-meta": {
+        "role": "neutral",
+        "displayName": "Bleu-gris métadonnées",
+        "canonical": "oklch(76.7% 0.042 267)",
+        "tonalRamp": [
+          "#070b16",
+          "#1c243a",
+          "#384159",
+          "#56617a",
+          "#77829c",
+          "#99a5c0",
+          "#bdc9e6",
+          "#e7eeff"
+        ]
+      },
+      "blanc-afficheur": {
+        "role": "neutral",
+        "displayName": "Blanc afficheur",
+        "canonical": "oklch(96.0% 0.012 265)",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#22252b",
+          "#3f4248",
+          "#5e6168",
+          "#7f8289",
+          "#a1a5ad",
+          "#c5c9d1",
+          "#eceef3"
+        ]
+      },
+      "jaune-afficheur": {
+        "role": "primary",
+        "displayName": "Jaune afficheur",
+        "canonical": "oklch(87.9% 0.162 91)",
+        "tonalRamp": [
+          "#1a0500",
+          "#421800",
+          "#623800",
+          "#835900",
+          "#a77c00",
+          "#cb9f00",
+          "#f1c429",
+          "#ffeda2"
+        ]
+      },
+      "jaune-afficheur-survol": {
+        "role": "primary",
+        "displayName": "Jaune afficheur éclairci",
+        "canonical": "oklch(91.2% 0.126 93)",
+        "tonalRamp": [
+          "#160800",
+          "#3a1e00",
+          "#593d00",
+          "#7a5d00",
+          "#9d7f00",
+          "#c0a239",
+          "#e6c761",
+          "#ffeeb5"
+        ]
+      },
+      "statut-ouvert": {
+        "role": "secondary",
+        "displayName": "Vert ouvert",
+        "canonical": "oklch(83.4% 0.135 158)",
+        "tonalRamp": [
+          "#001400",
+          "#003503",
+          "#005522",
+          "#007741",
+          "#1d9a62",
+          "#4dbe83",
+          "#75e4a7",
+          "#c1ffda"
+        ]
+      },
+      "statut-bientot": {
+        "role": "secondary",
+        "displayName": "Ambre bientôt",
+        "canonical": "oklch(82.3% 0.136 68)",
+        "tonalRamp": [
+          "#1f0100",
+          "#4c0800",
+          "#6e2c00",
+          "#924e00",
+          "#b77000",
+          "#dd9339",
+          "#ffb760",
+          "#ffe5b4"
+        ]
+      },
+      "statut-ferme": {
+        "role": "secondary",
+        "displayName": "Corail fermé",
+        "canonical": "oklch(77.8% 0.131 29)",
+        "tonalRamp": [
+          "#230000",
+          "#540000",
+          "#781a12",
+          "#9e3e32",
+          "#c46052",
+          "#eb8374",
+          "#ffa797",
+          "#ffdcd0"
+        ]
+      },
+      "palette-haut": {
+        "role": "neutral",
+        "displayName": "Palette, moitié haute",
+        "canonical": "oklch(30.6% 0.094 267)",
+        "tonalRamp": [
+          "#030822",
+          "#112052",
+          "#2b3f73",
+          "#495f97",
+          "#6980bb",
+          "#8aa4e0",
+          "#aec8ff",
+          "#ddeeff"
+        ]
+      },
+      "palette-bas": {
+        "role": "neutral",
+        "displayName": "Palette, moitié basse",
+        "canonical": "oklch(25.4% 0.077 267)",
+        "tonalRamp": [
+          "#04091e",
+          "#14224a",
+          "#30406b",
+          "#4e608d",
+          "#6e81b1",
+          "#90a4d6",
+          "#b3c8fc",
+          "#e1eeff"
+        ]
+      },
+      "palette-charniere": {
+        "role": "neutral",
+        "displayName": "Palette, charnière",
+        "canonical": "oklch(14.3% 0.034 265)",
+        "tonalRamp": [
+          "#070b14",
+          "#1d2536",
+          "#394255",
+          "#576175",
+          "#788298",
+          "#9aa5bb",
+          "#bec9e0",
+          "#e8effd"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Display",
+        "purpose": "Titre de l'accueil seulement."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Nom de ville, nom d'établissement de la fiche, titres de message."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Noms dans les lignes, titres de section de la fiche, villes suggérées."
+      },
+      "board-figure": {
+        "displayName": "Chiffres du tableau",
+        "purpose": "Distances en case voie, compteurs, plages horaires, horloge, titres de tranche."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Chapeaux et prose."
+      },
+      "body-sm": {
+        "displayName": "Body small",
+        "purpose": "Métadonnées, statuts, notes, pied de page."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "En-têtes de colonnes et légendes du panneau de filtres, en majuscules."
+      }
+    },
+    "shadows": [
+      {
+        "name": "liseré-palette",
+        "value": "inset 0 -1px 0 rgb(0 0 0 / 0.35)",
+        "purpose": "Bord inférieur d'une case à bascule."
+      },
+      {
+        "name": "menu-deroulant",
+        "value": "0 18px 40px -16px rgb(2 6 20 / 0.8)",
+        "purpose": "Seule ombre portée : liste ouverte du sélecteur, qui recouvre le contenu."
+      },
+      {
+        "name": "soulignement-renforce",
+        "value": "0 2px 0 0 var(--primary)",
+        "purpose": "Double le soulignement jaune du grand champ au focus."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Glissement du plot des commutateurs (200 ms)."
+      },
+      {
+        "name": "etat-rapide",
+        "value": "150ms ease-out",
+        "purpose": "Couleur, fond, bordure et enfoncement de 1 px des contrôles et lignes."
+      },
+      {
+        "name": "flap-roll",
+        "value": "210ms steps(3, jump-end)",
+        "purpose": "Arrivée des palettes à bascule, décalage irrégulier par lettre, total sous 700 ms."
+      },
+      {
+        "name": "flap-idle",
+        "value": "420ms steps(3, jump-end) infinite",
+        "purpose": "Défilement continu pendant la recherche."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "sm",
+        "value": "640px"
+      },
+      {
+        "name": "md",
+        "value": "768px"
+      },
+      {
+        "name": "lg",
+        "value": "1024px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Bouton principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Action principale : jaune plein, angles de 3 px.",
+      "html": "<button class=\"ds-btn-primary\">Réessayer</button>",
+      "css": ".ds-btn-primary{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 20px;border:0;border-radius:3px;background:var(--primary,#ffd23f);color:var(--primary-foreground,#0a1430);font-family:var(--font-sans),'Sofia Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:background-color 150ms ease-out,transform 150ms ease-out}.ds-btn-primary:hover{background:#ffe07a}.ds-btn-primary:active{transform:translateY(1px)}.ds-btn-primary:focus-visible{outline:2px solid var(--ring,#ffd23f);outline-offset:2px}"
+    },
+    {
+      "name": "Bouton contour",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Action secondaire : Filtrer, Afficher plus, Effacer les filtres.",
+      "html": "<button class=\"ds-btn-outline\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><line x1=\"21\" x2=\"14\" y1=\"4\" y2=\"4\"/><line x1=\"10\" x2=\"3\" y1=\"4\" y2=\"4\"/><line x1=\"21\" x2=\"12\" y1=\"12\" y2=\"12\"/><line x1=\"8\" x2=\"3\" y1=\"12\" y2=\"12\"/><line x1=\"21\" x2=\"16\" y1=\"20\" y2=\"20\"/><line x1=\"12\" x2=\"3\" y1=\"20\" y2=\"20\"/><line x1=\"14\" x2=\"14\" y1=\"2\" y2=\"6\"/><line x1=\"8\" x2=\"8\" y1=\"10\" y2=\"14\"/><line x1=\"16\" x2=\"16\" y1=\"18\" y2=\"22\"/></svg>Filtrer</button>",
+      "css": ".ds-btn-outline{display:inline-flex;align-items:center;gap:8px;height:44px;padding:0 16px;border:1px solid var(--input,#6072a0);border-radius:3px;background:transparent;color:var(--foreground,#eef2fa);font-family:var(--font-sans),'Sofia Sans',sans-serif;font-size:1rem;font-weight:600;cursor:pointer;transition:background-color 150ms,border-color 150ms,transform 150ms}.ds-btn-outline:hover{border-color:var(--muted-foreground,#a7b3cf);background:var(--accent,#16274f)}.ds-btn-outline:active{transform:translateY(1px)}.ds-btn-outline:focus-visible{outline:2px solid var(--ring,#ffd23f);outline-offset:2px}"
+    },
+    {
+      "name": "Champ de recherche",
+      "kind": "input",
+      "description": "Saisie de ville soulignée, texte condensé, bouton carré jaune.",
+      "html": "<form class=\"ds-search\" role=\"search\"><input class=\"ds-search-input\" type=\"search\" placeholder=\"Une autre ville…\" aria-label=\"Ville\"><button class=\"ds-search-btn\" aria-label=\"Chercher\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.5\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14\"/><path d=\"m12 5 7 7-7 7\"/></svg></button></form>",
+      "css": ".ds-search{display:flex;align-items:flex-end;gap:12px;max-width:24rem;padding-bottom:8px;border-bottom:2px solid var(--input,#6072a0);transition:border-color 200ms}.ds-search:hover{border-color:var(--muted-foreground,#a7b3cf)}.ds-search:focus-within{border-color:var(--primary,#ffd23f)}.ds-search-input{flex:1;min-width:0;background:transparent;border:0;color:var(--foreground,#eef2fa);font-family: var(--font-display), 'Sofia Sans Condensed', sans-serif;font-size:1.5rem;font-weight:600;letter-spacing:-0.01em;caret-color:#ffd23f}.ds-search-input:focus-visible{outline:none}.ds-search-input::placeholder{color:var(--slack,#8391b3)}.ds-search-btn{display:grid;place-items:center;width:44px;height:44px;border:0;border-radius:3px;background:var(--primary,#ffd23f);color:var(--primary-foreground,#0a1430);cursor:pointer;transition:background-color 150ms,transform 150ms}.ds-search-btn:hover{background:#ffe07a}.ds-search-btn:active{transform:translateY(1px)}.ds-search-btn:focus-visible{outline:2px solid #ffd23f;outline-offset:2px}"
+    },
+    {
+      "name": "Bandeau",
+      "kind": "nav",
+      "description": "Logotype au « O » en case voie, liens bleu-gris, horloge de Paris en jaune.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-logo\" href=\"#\">IUTables’<span>O</span></a><nav class=\"ds-nav-links\"><a href=\"#\">Chercher une ville</a><a href=\"#\">À propos</a></nav><p class=\"ds-nav-clock\"><small>Paris</small><b>12:40</b></p></header>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:16px;padding:8px 32px;border-bottom:1px solid var(--border,#22345e);background:var(--background,#0a1430);color:var(--foreground,#eef2fa)}.ds-nav-logo{display:flex;align-items:center;min-height:44px;color:inherit;text-decoration:none;font-family: var(--font-display), 'Sofia Sans Condensed', sans-serif;font-size:1.5rem;font-weight:700;line-height:1}.ds-nav-logo span{display:grid;place-items:center;width:24px;height:28px;margin-left:4px;border-radius:3px;background:var(--voie,#eef2fa);color:var(--voie-foreground,#0a1430)}.ds-nav-links{display:flex;margin-left:auto;font-size:.875rem}.ds-nav-links a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;border-radius:3px;color:var(--muted-foreground,#a7b3cf);text-decoration:none;transition:color 150ms}.ds-nav-links a:hover{color:var(--foreground,#eef2fa)}.ds-nav-links a:focus-visible{outline:2px solid #ffd23f;outline-offset:2px}.ds-nav-clock{display:flex;align-items:baseline;gap:8px;margin:0;padding-left:24px;border-left:1px solid var(--border,#22345e)}.ds-nav-clock small{font-size:.75rem;color:var(--muted-foreground,#a7b3cf)}.ds-nav-clock b{font-family: var(--font-display), 'Sofia Sans Condensed', sans-serif;font-size:1.5rem;font-weight:600;line-height:1;font-variant-numeric:tabular-nums;color:var(--primary,#ffd23f)}"
+    },
+    {
+      "name": "Ligne du tableau",
+      "kind": "card",
+      "refersTo": "ligne-tableau",
+      "description": "Établissement, métadonnées, statut avec pictogramme, pastilles, distance en case voie.",
+      "html": "<article class=\"ds-row\"><h4><a href=\"#\">Le Bistrot du Martroi</a></h4><p class=\"ds-row-meta\">Restaurant · française · 12 place du Martroi</p><p class=\"ds-row-status\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.25\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><circle cx=\"12\" cy=\"12\" r=\"10\"/><path d=\"m9 12 2 2 4-4\"/></svg>Ouvert<span>· ferme à 14 h</span></p><ul class=\"ds-row-tags\"><li>À emporter</li></ul><p class=\"ds-voie\">350 m</p></article>",
+      "css": ".ds-row{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-areas:'name dist' 'meta meta' 'status status' 'tags tags';column-gap:16px;padding:14px 12px;border-bottom:1px solid var(--border,#22345e);background:var(--row-alt,#0e1a3b);color:var(--foreground,#eef2fa);font-family:var(--font-sans),'Sofia Sans',sans-serif;transition:background-color 150ms}.ds-row:hover{background:var(--accent,#16274f)}.ds-row h4{grid-area:name;margin:0;font-family: var(--font-display), 'Sofia Sans Condensed', sans-serif;font-size:1.375rem;font-weight:600;line-height:1.25}.ds-row h4 a{color:inherit;text-decoration:none;transition:color 150ms}.ds-row:hover h4 a{color:var(--primary,#ffd23f)}.ds-row h4 a:focus-visible{outline:2px solid #ffd23f;outline-offset:2px}.ds-row-meta{grid-area:meta;margin:4px 0 0;font-size:.875rem;color:var(--muted-foreground,#a7b3cf)}.ds-row-status{grid-area:status;display:flex;align-items:center;gap:6px;margin:6px 0 0;font-size:.875rem;font-weight:600;color:var(--status-open,#74e3a6)}.ds-row-status span{margin-left:-2px;font-weight:400;color:var(--muted-foreground,#a7b3cf)}.ds-row-tags{grid-area:tags;display:flex;gap:6px;margin:10px 0 0;padding:0;list-style:none}.ds-row-tags li{padding:2px 6px;border:1px solid var(--input,#6072a0);border-radius:2px;font-size:.75rem;line-height:1.25}.ds-voie{grid-area:dist;justify-self:end;display:inline-grid;place-items:center;height:32px;min-width:4.5rem;margin:0;padding:0 8px;border-radius:3px;background:var(--voie,#eef2fa);color:var(--voie-foreground,#0a1430);font-family: var(--font-display), 'Sofia Sans Condensed', sans-serif;font-size:1.125rem;font-weight:700;font-variant-numeric:tabular-nums}"
+    },
+    {
+      "name": "Commutateur de filtre",
+      "kind": "chip",
+      "refersTo": "commutateur",
+      "description": "Rangée libellée de 48 px avec commutateur carré, plot jaune-nuit à l'état actif.",
+      "html": "<button class=\"ds-switch\" role=\"switch\" aria-checked=\"true\"><span>Ouvert maintenant</span><i></i></button><button class=\"ds-switch\" role=\"switch\" aria-checked=\"false\"><span>Vegan</span><i></i></button>",
+      "css": ".ds-switch{display:flex;align-items:center;justify-content:space-between;gap:16px;width:16rem;min-height:48px;padding:0;border:0;border-bottom:1px solid var(--border,#22345e);background:transparent;color:rgb(238 242 250/.85);font-family:var(--font-sans),'Sofia Sans',sans-serif;font-size:1rem;text-align:left;cursor:pointer}.ds-switch:hover{color:#eef2fa}.ds-switch:focus-visible{outline:2px solid #ffd23f;outline-offset:-2px}.ds-switch[aria-checked=true] span{font-weight:600;color:#eef2fa}.ds-switch i{position:relative;width:40px;height:24px;box-sizing:border-box;border:1px solid var(--input,#6072a0);border-radius:3px;transition:background-color 150ms,border-color 150ms}.ds-switch:hover i{border-color:var(--muted-foreground,#a7b3cf)}.ds-switch i::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:2px;background:var(--input,#6072a0);transition:left 200ms cubic-bezier(0.16,1,0.3,1),background-color 200ms}.ds-switch[aria-checked=true] i{border-color:#ffd23f;background:#ffd23f}.ds-switch[aria-checked=true] i::after{left:calc(100% - 19px);background:#0a1430}"
+    },
+    {
+      "name": "Palettes à bascule",
+      "kind": "custom",
+      "description": "Signature : chaque lettre roule en trois crans jusqu'à la lettre finale, déjà en place sans animation.",
+      "html": "<span class=\"ds-flaps\" aria-label=\"Orléans\"><span class=\"ds-flap\"><span style=\"--d:0ms\"><b>K</b><b>2</b><b>T</b><b>O</b></span></span><span class=\"ds-flap\"><span style=\"--d:40ms\"><b>A</b><b>9</b><b>M</b><b>R</b></span></span><span class=\"ds-flap\"><span style=\"--d:75ms\"><b>Z</b><b>E</b><b>4</b><b>L</b></span></span><span class=\"ds-flap\"><span style=\"--d:95ms\"><b>P</b><b>C</b><b>7</b><b>É</b></span></span></span>",
+      "css": ".ds-flaps{display:inline-flex;gap:.06em;font-family: var(--font-display), 'Sofia Sans Condensed', sans-serif;font-size:3rem;font-weight:700;color:var(--foreground,#eef2fa)}.ds-flap{position:relative;display:inline-block;width:.66em;height:1.12em;overflow:hidden;border-radius:.06em;background:linear-gradient(to bottom,#1a2b5e 0 calc(50% - 1px),#040918 calc(50% - 1px) calc(50% + 1px),#121f47 calc(50% + 1px) 100%);box-shadow:inset 0 -1px 0 rgb(0 0 0/.35);text-align:center;line-height:1.12em}.ds-flap>span{display:flex;flex-direction:column;transform:translateY(-75%);animation:ds-flap-roll 210ms steps(3,jump-end) backwards;animation-delay:var(--d,0ms)}.ds-flap b{display:block;height:1.12em;font-weight:inherit}.ds-flaps:hover .ds-flap>span{animation:ds-flap-roll 420ms steps(3,jump-end) infinite;animation-delay:var(--d,0ms)}@keyframes ds-flap-roll{from{transform:translateY(0)}to{transform:translateY(-75%)}}@media (prefers-reduced-motion:reduce){.ds-flap>span,.ds-flaps:hover .ds-flap>span{animation:none}}"
+    }
+  ],
+  "narrative": {
+    "northStar": "Le tableau des départs",
+    "overview": "**Creative North Star: \"Le tableau des départs\"**\n\nChaque écran se lit comme l'afficheur rétroéclairé d'un hall de gare : un fond bleu nuit plein, des lignes alternées d'un cran plus claires, des filets d'un pixel, des noms en blanc condensé, la distance dans une case blanche comme un numéro de voie et l'heure de Paris en jaune dans le bandeau. Les adresses sont rangées par distance et leur statut d'ouverture s'affiche en face, de façon à ce qu'un coup d'œil suffise.\n\nLa densité est celle d'un tableau d'information, pas d'une page vitrine. Pas de carte flottante, pas d'ombre, pas de photo. La profondeur vient uniquement de l'écart de luminosité entre les bleus. Le jaune est rare, et c'est ce qui lui donne son poids : il désigne ce qui compte maintenant (l'heure, le focus, la sélection, l'action principale, le jour même dans un horaire, la tranche de distance courante).\n\nLe système refuse deux voisins directs : la grille de cartes avec plan à droite des annuaires, et le bistrot crème, serif et terracotta. Il n'existe qu'un thème, sombre, déclaré au navigateur (`color-scheme: dark`, `themeColor` égal au fond).",
+    "keyCharacteristics": [
+      "Un seul fond bleu nuit, profondeur par paliers de luminosité, jamais par ombre.",
+      "Jaune afficheur réservé à l'instant présent et à l'action.",
+      "Sofia Sans Condensed pour tout ce qui s'affiche au tableau, Sofia Sans pour la prose et les contrôles.",
+      "Case « voie » blanche pour les nombres de repérage (distance, département, le « O » du logotype).",
+      "Chaque état porte un libellé et un pictogramme ; la couleur ne fait que confirmer.",
+      "Palettes à bascule comme unique mouvement signature."
+    ],
+    "rules": [
+      {
+        "name": "La règle du jaune qui désigne",
+        "body": "Le jaune marque ce qui concerne le visiteur maintenant ou ce qu'il peut actionner. Il n'est jamais décoratif, jamais un fond de section, jamais une couleur de texte courant.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle de l'absence lisible",
+        "body": "Une donnée manquante s'écrit en gris non renseigné avec le pictogramme cercle pointillé. Elle ne se cache pas et ne se confond pas avec le bleu-gris des métadonnées réelles.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle des jetons repeints",
+        "body": "Tout ce qui n'est pas du DOM, comme le fond de carte OpenFreeMap, est repeint depuis les propriétés CSS du site à l'exécution, jamais avec des couleurs recopiées.",
+        "section": "colors"
+      },
+      {
+        "name": "La règle de l'afficheur condensé",
+        "body": "Ce qui s'afficherait sur le tableau d'une gare (noms, titres, chiffres, horaires) est en Sofia Sans Condensed ; ce qui s'expliquerait au guichet est en Sofia Sans. Tous les `h1` à `h4` sont condensés et équilibrés (`text-wrap: balance`).",
+        "section": "typography"
+      },
+      {
+        "name": "La règle des chiffres alignés",
+        "body": "Distances, compteurs, heures et plages horaires utilisent toujours les chiffres tabulaires.",
+        "section": "typography"
+      },
+      {
+        "name": "La règle de l'afficheur plat",
+        "body": "Aucune ombre sur les lignes, sections, boutons ou contrôles de carte (les ombres MapLibre sont retirées). Seul un calque qui recouvre le contenu, comme un menu ouvert, a droit à une ombre.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** poser toute nouvelle page sur le fond nuit afficheur, dans le conteneur de 80rem, aligné à gauche, avec une grille asymétrique.",
+      "**Do** présenter toute liste d'éléments comparables en lignes de tableau alternées séparées par des filets d'un pixel, avec en-têtes de colonnes en label majuscule espacé (0.14em).",
+      "**Do** mettre les nombres de repérage (distance, département) dans une case voie blanche, en condensé gras tabulaire.",
+      "**Do** accompagner chaque état d'un libellé et d'un pictogramme Lucide ; la couleur de statut ne fait que confirmer.",
+      "**Do** écrire l'absence de donnée en gris non renseigné avec le cercle pointillé.",
+      "**Do** garder l'anneau de focus jaune de 2 px décalé de 2 px et des cibles de 44 px minimum.",
+      "**Do** cibler les propriétés animées (couleur, fond, bordure, position) en 150 à 200 ms, et couper tout défilement sous mouvement réduit."
+    ],
+    "donts": [
+      "**Don't** empiler des cartes arrondies avec ombre portée, ni placer une grille de cartes à côté d'un plan : le résultat est un tableau, pas un annuaire.",
+      "**Don't** introduire un fond crème, une serif ou une teinte terracotta.",
+      "**Don't** utiliser le jaune pour décorer, remplir une section ou colorer de la prose.",
+      "**Don't** arrondir en pilule ou en cercle ; rester entre 2 et 4 px.",
+      "**Don't** ajouter de photographie.",
+      "**Don't** étendre les palettes à bascule au-delà des arrivées de données et de l'attente : un seul mouvement signature.",
+      "**Don't** mettre de libellé en majuscules au-dessus d'un titre : les majuscules espacées sont réservées aux en-têtes de colonnes et aux légendes de filtres."
+    ]
+  }
+}

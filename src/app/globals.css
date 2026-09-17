@@ -1,0 +1,277 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* Le site n'a qu'un thème : les variantes `dark:` des composants shadcn
+   s'appliquent toujours, quelle que soit la préférence du système. */
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.25rem;
+
+  /* Afficheur de gare : fond bleu nuit rétroéclairé, jaune réservé à
+     l'heure, au focus, à la sélection et à l'action principale. Contrastes
+     mesurés sur --background : texte 16,2:1, secondaire 8,7:1, « non
+     renseigné » 5,8:1, jaune 12,6:1. */
+  --background: #0a1430;
+  --foreground: #eef2fa;
+
+  --card: #0f1c40;
+  --card-foreground: #eef2fa;
+  --popover: #0f1c40;
+  --popover-foreground: #eef2fa;
+
+  --primary: #ffd23f;
+  --primary-foreground: #0a1430;
+
+  --secondary: #16274f;
+  --secondary-foreground: #eef2fa;
+
+  /* Survol des lignes et des options de liste. */
+  --accent: #16274f;
+  --accent-foreground: #ffffff;
+
+  --muted: #0e1a3b;
+  --muted-foreground: #a7b3cf;
+
+  --destructive: #ff9585;
+  --destructive-foreground: #0a1430;
+
+  --border: #22345e;
+  /* Bordure des champs et commutateurs : 3,8:1 sur le fond (WCAG 1.4.11). */
+  --input: #6072a0;
+  --ring: #ffd23f;
+
+  /* Ligne sur deux du tableau. */
+  --row-alt: #0e1a3b;
+  /* Information absente d'OpenStreetMap : lisible, mais en retrait. */
+  --slack: #8391b3;
+
+  --status-open: #74e3a6;
+  --status-soon: #ffb35c;
+  --status-closed: #ff9585;
+
+  /* Case blanche des distances, comme le numéro de voie. */
+  --voie: #eef2fa;
+  --voie-foreground: #0a1430;
+
+  /* Palettes à bascule : moitié haute un cran plus claire que la basse. */
+  --tile-top: #1a2b5e;
+  --tile-bottom: #121f47;
+  --tile-hinge: #040918;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-row-alt: var(--row-alt);
+  --color-slack: var(--slack);
+  --color-status-open: var(--status-open);
+  --color-status-soon: var(--status-soon);
+  --color-status-closed: var(--status-closed);
+  --color-voie: var(--voie);
+  --color-voie-foreground: var(--voie-foreground);
+
+  --radius-sm: 2px;
+  --radius-md: 3px;
+  --radius-lg: var(--radius);
+  --radius-xl: 6px;
+
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    color-scheme: dark;
+    scrollbar-color: var(--input) var(--background);
+  }
+
+  body {
+    caret-color: var(--primary);
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  a {
+    text-underline-offset: 0.2em;
+    text-decoration-thickness: 1px;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+
+  ::placeholder {
+    color: var(--slack);
+    opacity: 1;
+  }
+}
+
+/* ——— Palettes à bascule ———
+   Chaque case contient une bande verticale : trois lettres de passage
+   puis la lettre finale. Sans animation, la bande est déjà calée sur la
+   lettre finale ; le texte n'attend jamais le mouvement. */
+@layer components {
+  .flap-word {
+    display: inline-flex;
+    gap: 0.06em;
+    white-space: nowrap;
+  }
+
+  .flap {
+    position: relative;
+    display: inline-block;
+    width: 0.66em;
+    height: 1.12em;
+    overflow: hidden;
+    border-radius: 0.06em;
+    background: linear-gradient(
+      to bottom,
+      var(--tile-top) 0 calc(50% - 1px),
+      var(--tile-hinge) calc(50% - 1px) calc(50% + 1px),
+      var(--tile-bottom) calc(50% + 1px) 100%
+    );
+    box-shadow: inset 0 -1px 0 rgb(0 0 0 / 0.35);
+    color: var(--foreground);
+    text-align: center;
+    line-height: 1.12em;
+  }
+
+  .flap-strip {
+    display: flex;
+    flex-direction: column;
+    transform: translateY(-75%);
+    animation: flap-roll 210ms steps(3, jump-end) backwards;
+    animation-delay: var(--flap-delay, 0ms);
+  }
+
+  .flap-strip > span {
+    display: block;
+    height: 1.12em;
+  }
+
+  /* Recherche en cours : les cases défilent sans s'arrêter. */
+  .flap-idle .flap-strip {
+    animation: flap-roll 420ms steps(3, jump-end) infinite;
+    animation-delay: var(--flap-delay, 0ms);
+  }
+
+  @keyframes flap-roll {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-75%);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flap-strip,
+    .flap-idle .flap-strip {
+      animation: none;
+    }
+  }
+}
+
+/* ——— Ligne du tableau des résultats ———
+   Mobile : nom et distance, puis métadonnées, statut, services.
+   Desktop : trois colonnes, établissement · statut · distance. */
+@layer components {
+  .board-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "name dist"
+      "meta meta"
+      "status status"
+      "tags tags";
+  }
+
+  @media (width >= 48rem) {
+    .board-row {
+      grid-template-columns: minmax(0, 1fr) 11.5rem 5.5rem;
+      grid-template-areas:
+        "name status dist"
+        "meta status dist"
+        "tags status dist";
+      grid-template-rows: auto auto 1fr;
+    }
+  }
+}
+
+/* ——— Carte MapLibre ———
+   Les couleurs du fond de carte sont repeintes en JavaScript
+   (restaurant-map.tsx) ; ici, seulement les contrôles. */
+.maplibregl-ctrl-attrib-inner {
+  color: var(--muted-foreground);
+}
+
+.maplibregl-ctrl-group {
+  background: var(--card) !important;
+  border: 1px solid var(--input);
+  box-shadow: none !important;
+  border-radius: var(--radius-md) !important;
+}
+
+.maplibregl-ctrl-group button + button {
+  border-top-color: var(--border) !important;
+}
+
+.maplibregl-ctrl-group button .maplibregl-ctrl-icon {
+  filter: invert(1);
+}
+
+.maplibregl-ctrl-group button:not(:disabled):hover {
+  background-color: var(--accent) !important;
+}
+
+.maplibregl-ctrl-attrib {
+  background: var(--background) !important;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md) !important;
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+}
+
+.maplibregl-ctrl-attrib a {
+  color: var(--foreground) !important;
+}
+
+.maplibregl-ctrl-attrib-button {
+  filter: invert(1);
+}
