@@ -113,8 +113,23 @@ Aucune variable d'environnement n'est requise (`UNSPLASH_ACCESS_KEY` dans
 - Les données dépendent des contributeurs OpenStreetMap : horaires, régime
   alimentaire ou accessibilité manquent souvent. Les filtres n'affichent que
   les adresses renseignées.
+- **Limites de débit des API publiques.** Nominatim tolère 1 requête par
+  seconde ; largement suffisant ici (une recherche = un appel, mis en cache
+  24 h). Overpass est plus sensible : toutes les recherches du site passent
+  par le serveur, jamais par le navigateur du visiteur, donc c'est une seule
+  adresse IP (celle du serveur, pas celle de chaque visiteur) qui envoie
+  toutes les requêtes vers ses instances publiques. Un usage normal
+  (recherches espacées) reste sous leur seuil de tolérance ; des tests
+  répétés en rafale depuis la même adresse peuvent déclencher un 429 qui
+  n'apparaîtrait pas en usage réel.
+- **Villes très denses.** Sur un rayon au maximum (1,5 km) dans un centre
+  très dense (Marseille, Nice…), le calcul Overpass dépasse parfois le
+  budget même sans limite de débit : mesuré en frappant Overpass
+  directement, deux 504 de suite puis un succès en moins de 2 secondes au
+  troisième essai sur la même instance.
 - Quand toutes les instances Overpass sont indisponibles, une nouvelle
-  recherche échoue. Les recherches déjà en cache restent accessibles.
+  recherche échoue. Les recherches déjà en cache restent accessibles ; le
+  bouton « Relancer la recherche » couvre justement ce cas.
 - Une adresse inconnue renvoie la page 404 du site, mais avec un code HTTP
   200 : l'écran de chargement a déjà envoyé les en-têtes. Next.js ajoute
   `noindex` sur cette page.
