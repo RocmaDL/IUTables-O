@@ -58,12 +58,17 @@ npm run lint
 
 ## Choix techniques
 
-**Plusieurs instances Overpass.** Les serveurs publics d'Overpass sont
-gratuits mais souvent saturés : pendant le développement, on a vu passer
-des 429, des 504 et des connexions coupées sur l'instance principale.
-`src/lib/geo/overpass.ts` essaie trois instances à la suite, retente une
-fois une connexion coupée net, et abandonne au bout de 30 secondes avec un
-message clair plutôt qu'une page d'erreur.
+**Plusieurs instances Overpass, avec un second essai sur surcharge.** Les
+serveurs publics d'Overpass sont gratuits mais souvent saturés : pendant le
+développement, on a vu passer des 429, des 504 et des connexions coupées
+sur l'instance principale — parfois deux 504 de suite suivis d'une réponse
+en moins de 2 secondes au troisième essai sur la même instance, preuve
+qu'il s'agissait d'un pic passager plutôt que d'une panne. `src/lib/geo/overpass.ts`
+retente donc une fois la même instance sur un 429, un 5xx, une connexion
+coupée net ou un dépassement de délai signalé par Overpass lui-même (`remark`
+dans une réponse 200), avant de passer à l'instance suivante. Trois
+instances, un budget total de 42 secondes, un message clair plutôt qu'une
+page d'erreur au-delà.
 
 **Cache côté serveur.** Les résultats d'une recherche restent en cache
 30 minutes, une fiche 24 heures (`unstable_cache`). Seules les réponses
@@ -98,7 +103,7 @@ Aucune variable d'environnement n'est requise (`UNSPLASH_ACCESS_KEY` dans
 2. Nœud 20.9 ou plus récent (voir `engines` dans `package.json`).
 3. Les pages `/recherche` et `/restaurant/[osmId]` déclarent
    `export const maxDuration = 60` : Nominatim (deux essais, 8 s chacun) puis
-   Overpass (jusqu'à 30 s) peuvent dépasser la limite par défaut d'une
+   Overpass (jusqu'à 42 s) peuvent dépasser la limite par défaut d'une
    fonction (10 s sur l'offre Hobby). Vérifiez le plafond autorisé par votre
    offre Vercel si le déploiement refuse cette valeur.
 4. Vérifier les déploiements de prévisualisation sur chaque pull request.

@@ -16,7 +16,7 @@ import { getOpeningStatus, parisWallClock } from "@/lib/opening-hours";
 import { distanceInMeters, formatDistance } from "@/lib/labels";
 import type { GeocodedPlace, LiveRestaurant, RestaurantSummary } from "@/lib/geo/types";
 
-// Nominatim (jusqu'à 2 × 8 s) puis Overpass (jusqu'à 30 s) : sur Vercel, la
+// Nominatim (jusqu'à 2 × 8 s) puis Overpass (jusqu'à 42 s) : sur Vercel, la
 // limite par défaut d'une fonction (10 s en Hobby) couperait la requête
 // avant la fin. Ajustez si votre offre plafonne en dessous de 60 s.
 export const maxDuration = 60;

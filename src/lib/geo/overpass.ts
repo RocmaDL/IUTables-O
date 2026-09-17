@@ -15,11 +15,18 @@ const OVERPASS_ENDPOINTS = [
 
 // Délai côté Overpass (secondes) et délai par tentative (millisecondes) :
 // le second est plus long pour laisser Overpass répondre par une erreur
-// explicite plutôt que de couper la connexion.
-const QUERY_TIMEOUT_S = 10;
-const ATTEMPT_TIMEOUT_MS = 13_000;
-/** Au-delà, l'utilisateur attend trop : on affiche l'erreur. */
-const TOTAL_BUDGET_MS = 30_000;
+// explicite plutôt que de couper la connexion. Mesuré sur Marseille et
+// Nice (denses, rayon au maximum) : à 10 s, Overpass s'auto-interrompt
+// (504/429) avant d'avoir fini un calcul qui aurait pu aboutir avec plus
+// de temps ; 25 s laisse la marge de le terminer.
+const QUERY_TIMEOUT_S = 25;
+const ATTEMPT_TIMEOUT_MS = 28_000;
+/**
+ * Au-delà, l'utilisateur attend trop : on affiche l'erreur. Reste sous
+ * `maxDuration` (60 s, voir les pages recherche et fiche) une fois ajouté
+ * le pire cas de Nominatim (2 × 8 s).
+ */
+const TOTAL_BUDGET_MS = 42_000;
 /** Une connexion coupée en moins de ce délai mérite un second essai. */
 const FAST_FAILURE_MS = 2_000;
 
@@ -77,7 +84,12 @@ export function osmUrl(restaurant: Pick<LiveRestaurant, "osmType" | "osmId">): s
 
 type Attempt =
   | { ok: true; elements: OverpassElement[] }
-  | { ok: false; reason: string; fast: boolean };
+  | { ok: false; reason: string; retry: boolean };
+
+/** 429 et 5xx signalent une surcharge passagère du serveur, pas une requête invalide. */
+function isOverloadStatus(status: number): boolean {
+  return status === 429 || (status >= 500 && status < 600);
+}
 
 async function attempt(endpoint: string, query: string, timeoutMs: number): Promise<Attempt> {
   const startedAt = Date.now();
@@ -93,15 +105,20 @@ async function attempt(endpoint: string, query: string, timeoutMs: number): Prom
     });
 
     if (!response.ok) {
-      return { ok: false, reason: `HTTP ${response.status}`, fast: false };
+      // Une instance surchargée répond parfois par un 504 après avoir
+      // presque terminé le calcul (observé : deux 504 puis un 200 en
+      // moins de 2 s) : retenter la même instance vaut mieux que passer
+      // aussitôt à la suivante.
+      return { ok: false, reason: `HTTP ${response.status}`, retry: isOverloadStatus(response.status) };
     }
 
     const data = (await response.json()) as { elements: OverpassElement[]; remark?: string };
 
     // Un dépassement de délai ou de mémoire arrive dans une réponse 200,
-    // signalé par un `remark` et des résultats partiels.
+    // signalé par un `remark` et des résultats partiels : même cause
+    // passagère qu'un 504, même second essai.
     if (data.remark?.includes("error")) {
-      return { ok: false, reason: data.remark, fast: false };
+      return { ok: false, reason: data.remark, retry: true };
     }
 
     return { ok: true, elements: data.elements };
@@ -110,7 +127,10 @@ async function attempt(endpoint: string, query: string, timeoutMs: number): Prom
     return {
       ok: false,
       reason: `${error instanceof Error ? error.name : "erreur"} ${cause}`.trim(),
-      fast: Date.now() - startedAt < FAST_FAILURE_MS,
+      // Une connexion coupée net en moins de deux secondes vaut la peine
+      // d'être retentée ; un abandon au bout du délai complet signale une
+      // instance muette, où retenter ne ferait que perdre le même temps.
+      retry: Date.now() - startedAt < FAST_FAILURE_MS,
     };
   }
 }
@@ -121,8 +141,6 @@ async function runQuery(query: string): Promise<OverpassElement[]> {
 
   for (const endpoint of OVERPASS_ENDPOINTS) {
     const host = new URL(endpoint).host;
-    // Une connexion coupée net (ECONNRESET) est souvent passagère : un
-    // second essai immédiat coûte peu, contrairement à un délai dépassé.
     for (let tries = 0; tries < 2; tries++) {
       const remaining = deadline - Date.now();
       if (remaining < FAST_FAILURE_MS) {
@@ -133,7 +151,7 @@ async function runQuery(query: string): Promise<OverpassElement[]> {
       if (result.ok) return result.elements;
 
       failures.push(`${host} ${result.reason}`);
-      if (!result.fast) break;
+      if (!result.retry) break;
     }
   }
 
