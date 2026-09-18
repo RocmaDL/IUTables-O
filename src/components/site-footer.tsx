@@ -15,7 +15,17 @@ export function SiteFooter() {
             contributeurs OpenStreetMap
             <span className="sr-only"> (nouvel onglet)</span>
           </a>
-          , licence ODbL.
+          , licence ODbL. Propulsé par{" "}
+          <a
+            href="https://www.geoapify.com/"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-foreground underline decoration-input hover:decoration-primary"
+          >
+            Geoapify
+            <span className="sr-only"> (nouvel onglet)</span>
+          </a>
+          .
         </p>
         <Link
           href="/a-propos"

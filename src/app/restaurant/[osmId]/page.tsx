@@ -7,22 +7,22 @@ import { cn } from "cn";
 import { StatusMark, toneOf } from "@/components/opening-status";
 import { RestaurantMap } from "@/components/restaurant-map";
 import { buttonVariants } from "@/components/ui/button";
-import { geocodeCity } from "@/lib/geo/nominatim";
 import {
   fetchRestaurantById,
   fetchRestaurantsAround,
+  GeoapifyUnavailableError,
+  geocodeCity,
   osmUrl,
-  OverpassUnavailableError,
   parseOsmId,
   searchRadius,
-} from "@/lib/geo/overpass";
+} from "@/lib/geo/geoapify";
 import { getOpeningStatus, getWeekSchedule, parisWallClock } from "@/lib/opening-hours";
 import { KIND_LABELS, labelCuisine, labelYesNo } from "@/lib/labels";
 import { KIND_ICONS } from "@/lib/kind-icons";
 import type { LiveRestaurant } from "@/lib/geo/types";
 
-// Voir la même constante dans /recherche : Nominatim + Overpass peuvent
-// dépasser la limite par défaut d'une fonction Vercel.
+// Voir la même constante dans /recherche : Geoapify peut dépasser la
+// limite par défaut d'une fonction Vercel.
 export const maxDuration = 60;
 
 type Props = PageProps<"/restaurant/[osmId]">;
@@ -34,7 +34,7 @@ function readVille(value: string | string[] | undefined): string | null {
 /**
  * Depuis une page de résultats, la fiche est déjà dans le cache de la
  * recherche (mêmes arguments, donc même clé) : on la reprend là plutôt que
- * de solliciter à nouveau Overpass. La requête par identifiant ne sert
+ * de solliciter à nouveau Geoapify. La requête par identifiant ne sert
  * qu'aux liens ouverts sans `?ville=` ou quand l'adresse n'y figure pas.
  */
 const findRestaurant = cache(
@@ -108,7 +108,7 @@ export default async function RestaurantPage({ params, searchParams }: Props) {
   try {
     restaurant = await findRestaurant(osmId, ville);
   } catch (error) {
-    if (error instanceof OverpassUnavailableError) {
+    if (error instanceof GeoapifyUnavailableError) {
       console.error(error.message);
       return (
         <Shell ville={ville}>

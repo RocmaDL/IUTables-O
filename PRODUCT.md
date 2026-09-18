@@ -35,17 +35,18 @@ manque, et renvoie vers la fiche OSM pour la corriger.
 
 ## Operating Context
 
-- Recherche par nom de commune (Nominatim), puis liste des établissements
-  dans un rayon de 500 m à 1,5 km autour du centre (Overpass), triés par
-  distance, 400 adresses au plus, affichées par 24.
+- Recherche par nom de commune, puis liste des établissements dans un rayon
+  de 500 m à 1,5 km autour du centre, triés par distance, 400 adresses au
+  plus, affichées par 24. Un seul fournisseur (Geoapify, voir Capabilities)
+  pour les deux étapes depuis le 18/09/2026.
 - Filtres côté client sur les résultats chargés : type d'adresse, cuisine,
   ouvert maintenant, végétarien, vegan, accès fauteuil roulant, à emporter.
 - Fiche détaillée : adresse et itinéraire, contact, horaires de la semaine
   (heure de Paris, jours fériés compris), services sur place, carte
   MapLibre + OpenFreeMap, lien vers OSM.
-- Les API publiques sont parfois saturées : attentes de plusieurs secondes,
-  pannes temporaires. Les états de chargement et d'erreur font partie de
-  l'expérience normale, pas d'un cas rare.
+- Le service peut être saturé ou en retard : attentes de plusieurs
+  secondes, pannes temporaires. Les états de chargement et d'erreur font
+  partie de l'expérience normale, pas d'un cas rare.
 
 ## Capabilities and Constraints
 
@@ -58,16 +59,24 @@ manque, et renvoie vers la fiche OSM pour la corriger.
   la maquiller.
 - Pas de photos : Unsplash n'est pas branché, et l'identité visuelle ne
   s'appuie pas sur la photographie (décision du 17/09/2026).
-- Géocodage : Nominatim reste la source, malgré sa fiabilité inférieure à
-  la Base Adresse Nationale (BAN) de l'État. Testée puis abandonnée le
-  17/09/2026 : le point que la BAN renvoie pour une commune est celui de sa
-  mairie, parfois à 1-3 km du centre historique/commercial — sur Orléans,
-  ça fait tomber les résultats de 256 à 31 sur le même rayon. Le nœud
-  Nominatim, placé à la main par les contributeurs OSM, reste mieux choisi
-  pour « trouver ce qui est proche du centre ». Ne pas re-basculer sans
-  revérifier ce point précis.
+- Géocodage et recherche de restaurants : Geoapify (`GEOAPIFY_API_KEY`,
+  gratuite, 3000 crédits/jour, sans carte) depuis le 18/09/2026, source
+  unique pour les deux besoins. Remplace Nominatim + 4 miroirs Overpass :
+  même donnée OpenStreetMap (coordonnées et emprise identiques, vérifié sur
+  Orléans), infrastructure dédiée plutôt que des instances publiques
+  partagées et parfois saturées.
+  - Avant elle, un essai de la Base Adresse Nationale (BAN) de l'État avait
+    été abandonné le 17/09/2026 : son point pour une commune est celui de
+    la mairie, parfois à 1-3 km du centre historique/commercial (Orléans :
+    256 → 31 résultats sur le même rayon). Geoapify n'a pas ce défaut
+    (mêmes coordonnées que Nominatim, vérifié).
+  - Le géocodeur Geoapify lit « Ville 93 » comme une adresse postale
+    (« 93 rue Ville ») et non « la commune Ville dans le département 93 »
+    comme le faisait Nominatim : `src/lib/geo/departments.ts` reformule la
+    requête (« Ville, Nom-du-département ») avant l'appel. Ne pas retirer
+    sans un autre test de désambiguïsation.
 - MapLibre servi depuis `public/vendor/` (voir README).
-- Attribution OpenStreetMap (licence ODbL) obligatoire.
+- Attribution obligatoire : OpenStreetMap (licence ODbL) et Geoapify.
 
 ## Brand Commitments
 

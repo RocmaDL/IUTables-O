@@ -12,8 +12,9 @@ données live via des API publiques gratuites, déploiement Vercel.
   supprimé (`DROP SCHEMA iutableso`) : aucune trace ne reste dans le projet
   Supabase (qui héberge par ailleurs le portfolio personnel, non affecté).
 - **Portée nationale.** Recherche par ville plutôt qu'un dataset statique
-  limité à Orléans : géocodage via Nominatim (OpenStreetMap), résultats via
-  Overpass API — les deux gratuites, sans clé.
+  limité à Orléans : géocodage et résultats via Geoapify depuis le
+  18/09/2026 (clé gratuite, 3000 crédits/jour ; remplace Nominatim et
+  Overpass, saturés et lents en usage réel).
 - **shadcn/ui + Tailwind CSS v4**, direction artistique « tableau des
   départs » depuis le 17/09/2026 : fond bleu nuit, jaune d'afficheur,
   nom de ville en palettes à bascule, Sofia Sans + Sofia Sans Condensed.
@@ -85,6 +86,30 @@ données live via des API publiques gratuites, déploiement Vercel.
       est celui de la mairie, parfois à 1-3 km du centre historique —
       256 → 31 résultats sur Orléans avec le même rayon. Détail dans
       PRODUCT.md, section Capabilities and Constraints
+- [ ] Retour de tests utilisateurs : site pas identifié comme un
+      outil de recherche de restaurants (manque de vocabulaire/icônes) —
+      corrigé le même jour (favicon, `src/lib/kind-icons.ts`, icônes sur
+      l'accueil/filtres/résultats/fiche). Voir si un nouveau test confirme,
+      sinon retravailler le H1 et l'esthétique tableau de gare elle-même
+
+### Session du 18 septembre 2026 — migration Geoapify
+
+- [x] Nominatim et Overpass remplacés par Geoapify (`GEOAPIFY_API_KEY`,
+      3000 crédits/jour gratuits, sans carte) : `src/lib/geo/geoapify.ts`
+      couvre géocodage, recherche par rayon et fiche par identifiant OSM
+      direct (`/v2/place-details`). Vérifié en direct : mêmes coordonnées
+      et même emprise que Nominatim sur Orléans, tous les tags OSM utiles
+      présents (`opening_hours`, `wheelchair`, `diet:vegetarian`,
+      `diet:vegan`, `takeaway`, `delivery`, `internet_access`)
+- [x] `src/lib/geo/departments.ts` : reformule « Ville 93 » en
+      « Ville, Nom-du-département » — Geoapify lit sinon ce format comme
+      une adresse postale et peut renvoyer une tout autre commune (testé :
+      Saint-Denis 93 tombait sur La Réunion sans cette reformulation)
+- [x] Marseille et Nice (cas les plus denses, en échec fréquent avec
+      Overpass) répondent en 4-5 s à froid avec Geoapify, testé trois fois
+      de suite avec succès
+- [x] Attribution Geoapify ajoutée (pied de page, page à-propos), requise
+      par son offre gratuite
 
 ## À faire
 
@@ -130,7 +155,7 @@ données live via des API publiques gratuites, déploiement Vercel.
 | Session PHP + mdp en clair | Aucun compte utilisateur |
 | HTML statique + JS inline | Composants React + Tailwind CSS v4 |
 | Bootstrap 5 générique | shadcn/ui personnalisé |
-| Dataset statique Orléans (382 restaurants) | Recherche nationale live (BAN + Overpass) |
+| Dataset statique Orléans (382 restaurants) | Recherche nationale live (Geoapify) |
 | Hébergement manuel | Vercel |
 | Carte Leaflet | MapLibre GL JS + OpenFreeMap |
 | — | API Unsplash (photos), pas encore branchée |

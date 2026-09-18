@@ -5,20 +5,21 @@ import { CitySearchForm } from "@/components/city-search-form";
 import { RestaurantResults } from "@/components/restaurant-results";
 import { SplitFlap } from "@/components/split-flap";
 import { buttonVariants } from "@/components/ui/button";
-import { geocodeCity, GeocodingUnavailableError } from "@/lib/geo/nominatim";
 import {
   fetchRestaurantsAround,
-  OverpassUnavailableError,
+  GeoapifyUnavailableError,
+  geocodeCity,
   RESULT_CAP,
   searchRadius,
-} from "@/lib/geo/overpass";
+} from "@/lib/geo/geoapify";
 import { getOpeningStatus, parisWallClock } from "@/lib/opening-hours";
 import { distanceInMeters, formatDistance } from "@/lib/labels";
 import type { GeocodedPlace, LiveRestaurant, RestaurantSummary } from "@/lib/geo/types";
 
-// Nominatim (jusqu'à 2 × 8 s) puis Overpass (jusqu'à 42 s) : sur Vercel, la
-// limite par défaut d'une fonction (10 s en Hobby) couperait la requête
-// avant la fin. Ajustez si votre offre plafonne en dessous de 60 s.
+// Geocodage et recherche passent par Geoapify (deux essais, jusqu'à 10 s
+// chacun) : sur Vercel, la limite par défaut d'une fonction (10 s en
+// Hobby) couperait la requête avant la fin. Ajustez si votre offre
+// plafonne en dessous de 60 s.
 export const maxDuration = 60;
 
 type SearchParams = Awaited<PageProps<"/recherche">["searchParams"]>;
@@ -38,7 +39,7 @@ export async function generateMetadata(props: PageProps<"/recherche">): Promise<
   };
 }
 
-/** « Loiret, Centre-Val de Loire » à partir du nom complet Nominatim. */
+/** « Loiret, Centre-Val de Loire » à partir du nom complet renvoyé par le géocodeur. */
 function regionOf(place: GeocodedPlace): string | null {
   const parts = place.displayName
     .split(",")
@@ -67,7 +68,7 @@ export default async function RecherchePage(props: PageProps<"/recherche">) {
   try {
     place = await geocodeCity(ville);
   } catch (error) {
-    if (error instanceof GeocodingUnavailableError) return <ServiceUnavailable ville={ville} />;
+    if (error instanceof GeoapifyUnavailableError) return <ServiceUnavailable ville={ville} />;
     throw error;
   }
 
@@ -90,7 +91,7 @@ export default async function RecherchePage(props: PageProps<"/recherche">) {
   try {
     restaurants = await fetchRestaurantsAround(place.lat, place.lon, radius);
   } catch (error) {
-    if (error instanceof OverpassUnavailableError) {
+    if (error instanceof GeoapifyUnavailableError) {
       console.error(error.message);
       return <ServiceUnavailable ville={ville} />;
     }

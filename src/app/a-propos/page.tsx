@@ -20,19 +20,30 @@ export default function AProposPage() {
         <div className="max-w-[65ch] space-y-6 text-lg leading-[1.7] text-foreground/90 md:pt-3">
           <p>
             IUTables&rsquo;O n&rsquo;a pas sa propre base de restaurants.
-            Chaque recherche interroge OpenStreetMap : Nominatim pour
-            retrouver la ville, Overpass pour lister les établissements
-            autour. Pour ne pas surcharger ces services gratuits, le site
-            garde une recherche en cache pendant une demi-heure, puis la
-            refait. Les cartes utilisent les fonds d&rsquo;OpenFreeMap, eux
-            aussi tirés d&rsquo;OpenStreetMap.
+            Chaque recherche retrouve la commune puis liste les
+            établissements autour via{" "}
+            <a
+              href="https://www.geoapify.com/"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={linkClass}
+            >
+              Geoapify
+              <span className="sr-only"> (nouvel onglet)</span>
+            </a>
+            , qui interroge OpenStreetMap pour son compte. Pour ne pas
+            surcharger ce service gratuit, le site garde une recherche en
+            cache pendant une demi-heure, puis la refait. Les cartes
+            utilisent les fonds d&rsquo;OpenFreeMap, eux aussi tirés
+            d&rsquo;OpenStreetMap.
           </p>
           <p>
             OpenStreetMap est construit par des contributeurs bénévoles.
             Certaines villes sont cartographiées en détail, d&rsquo;autres
             beaucoup moins : un restaurant existant peut manquer, ou une
             information (horaires, régime alimentaire, accès PMR) peut être
-            absente ou dépassée. Les données sont publiées sous licence{" "}
+            absente ou dépassée. Les données restaurants sont publiées sous
+            licence{" "}
             <a
               href="https://www.openstreetmap.org/copyright"
               target="_blank"
@@ -47,8 +58,7 @@ export default function AProposPage() {
           <p>
             Ce projet est né d&rsquo;un exercice scolaire (IUT d&rsquo;Orléans)
             reconstruit comme démonstration technique : Next.js, shadcn/ui,
-            et deux API publiques gratuites plutôt qu&rsquo;une base de
-            données maison.
+            et une API gratuite plutôt qu&rsquo;une base de données maison.
           </p>
         </div>
       </div>
