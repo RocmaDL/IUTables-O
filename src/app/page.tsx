@@ -6,7 +6,6 @@ import { KIND_ICONS } from "@/lib/kind-icons";
 import { KIND_LABELS } from "@/lib/labels";
 import type { PlaceKind } from "@/lib/geo/types";
 
-// Le numéro de département tient la place du numéro de voie.
 const VILLES_SUGGEREES = [
   { nom: "Paris", departement: "75" },
   { nom: "Lyon", departement: "69" },
@@ -14,8 +13,6 @@ const VILLES_SUGGEREES = [
   { nom: "Toulouse", departement: "31" },
   { nom: "Bordeaux", departement: "33" },
   { nom: "Lille", departement: "59" },
-  { nom: "Nantes", departement: "44" },
-  { nom: "Orléans", departement: "45" },
 ];
 
 const KINDS: PlaceKind[] = ["restaurant", "fast_food", "cafe"];
@@ -38,43 +35,45 @@ export default function Home() {
         <div>
           <h1
             id="titre-accueil"
-            className="max-w-[15ch] font-display text-[clamp(3rem,7.4vw,6rem)] font-bold leading-[0.92] tracking-[-0.025em]"
+            className="max-w-[16ch] font-display text-[clamp(3rem,7.4vw,6rem)] font-bold leading-[0.92] tracking-[-0.025em]"
           >
-            Une table, dans n&rsquo;importe quelle ville de France.
+            Un restaurant, dans n&rsquo;importe quelle ville de France.
           </h1>
+
+          {/* Trois catégories, tout de suite après le titre : ce que le
+              site couvre doit se voir avant même le paragraphe d'intro
+              (retour de tests utilisateurs : trop petit et trop tardif
+              auparavant pour rivaliser avec le reste de la page). */}
+          <ul className="mt-6 flex flex-wrap gap-3">
+            {KINDS.map((kind) => {
+              const Icon = KIND_ICONS[kind];
+              return (
+                <li key={kind}>
+                  <span className="inline-flex items-center gap-2.5 rounded-md border-2 border-primary px-4 py-2.5 text-lg font-semibold leading-none">
+                    <Icon className="size-7 text-primary" strokeWidth={2.25} aria-hidden />
+                    {KIND_LABELS[kind]}
+                  </span>
+                </li>
+              );
+            })}
+          </ul>
+
           <p className="mt-6 max-w-[36rem] text-lg leading-relaxed text-muted-foreground">
             Cherchez une ville, IUTables&rsquo;O interroge OpenStreetMap en
             direct et vous montre les restaurants sur place : cuisine, régime
             alimentaire, accessibilité, horaires.
           </p>
 
-          {/* Trois catégories, icône + mot : la première chose qu'on doit
-              comprendre en arrivant, retour de tests utilisateurs. */}
-          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
-            {KINDS.map((kind) => {
-              const Icon = KIND_ICONS[kind];
-              return (
-                <li
-                  key={kind}
-                  className="inline-flex items-center gap-2 text-base font-medium text-foreground"
-                >
-                  <Icon className="size-[18px] text-primary" strokeWidth={2.25} aria-hidden />
-                  {KIND_LABELS[kind]}
-                </li>
-              );
-            })}
-          </ul>
-
           <CitySearchForm
             id="ville-accueil"
             size="lg"
             showLabel
             placeholder="Rennes, Strasbourg, Nice…"
-            className="mt-12"
+            className="mt-10"
           />
         </div>
 
-        <section aria-labelledby="villes" className="self-end">
+        <section aria-labelledby="villes" className="self-start">
           <div className="flex items-baseline justify-between border-b border-input px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
             <h2 id="villes" className="font-sans">
               Quelques villes
@@ -88,12 +87,14 @@ export default function Home() {
               <li key={nom} className="border-b border-border even:bg-row-alt">
                 <Link
                   href={`/recherche?ville=${encodeURIComponent(nom)}`}
-                  className="group grid min-h-14 grid-cols-[minmax(0,1fr)_auto_1.5rem] items-center gap-3 px-3 outline-offset-[-2px] transition-colors duration-150 hover:bg-accent"
+                  className="group grid min-h-12 grid-cols-[minmax(0,1fr)_auto_1.5rem] items-center gap-3 px-3 outline-offset-[-2px] transition-colors duration-150 hover:bg-accent"
                 >
-                  <span className="font-display text-[1.75rem] font-semibold leading-none tracking-[-0.01em] transition-colors duration-150 group-hover:text-primary">
+                  <span className="font-display text-2xl font-semibold leading-none tracking-[-0.01em] transition-colors duration-150 group-hover:text-primary">
                     {nom}
                   </span>
-                  <span className="grid h-7 min-w-9 place-items-center rounded-md bg-voie px-1.5 font-display text-lg font-bold tabular-nums text-voie-foreground">
+                  {/* Texte nu, sans case : réservée aux distances des
+                      résultats, cette case ne doit pas se répéter ici. */}
+                  <span className="font-sans text-sm font-medium tabular-nums text-muted-foreground">
                     <span className="sr-only">, département </span>
                     {departement}
                   </span>
