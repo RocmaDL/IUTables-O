@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/select";
 import { RestaurantRow } from "@/components/restaurant-row";
 import { SplitFlap } from "@/components/split-flap";
-import { formatDistance, isYes, KIND_LABELS, labelCuisine } from "@/lib/labels";
+import { isYes, KIND_LABELS, labelCuisine } from "@/lib/labels";
 import { KIND_ICONS } from "@/lib/kind-icons";
 import type { PlaceKind, RestaurantSummary } from "@/lib/geo/types";
 
@@ -50,8 +50,7 @@ const CRITERIA: { key: Criterion; label: string }[] = [
 
 const KINDS: (PlaceKind | typeof ALL)[] = [ALL, "restaurant", "fast_food", "cafe"];
 
-// Les graduations de la règle : la liste, déjà triée par distance, se lit
-// tranche par tranche.
+// La liste, déjà triée par distance, se lit tranche par tranche.
 const BANDS = [
   { max: 250, label: "Moins de 250 m" },
   { max: 500, label: "De 250 à 500 m" },
@@ -86,71 +85,12 @@ function countActive({ kind, cuisine, criteria }: Filters): number {
   );
 }
 
-/** Libellés de la règle : « 0 », « 250 m », « 1 km », « 1,5 km ». */
-function rulerLabel(meters: number): string {
-  return meters === 0 ? "0" : formatDistance(meters);
-}
-
-/**
- * Règle graduée du centre jusqu'au rayon de recherche : un trait tous les
- * 100 m, les limites de tranches chiffrées, et la portion occupée par la
- * tranche en jaune. Les chiffres sont déjà dans le titre : règle masquée
- * aux lecteurs d'écran.
- */
-function DistanceRuler({ from, to, radius }: { from: number; to: number; radius: number }) {
-  const scale = Math.max(radius, 100);
-  const at = (meters: number) => `${(Math.min(meters, scale) / scale) * 100}%`;
-  const ticks = Array.from({ length: Math.floor(scale / 100) + 1 }, (_, i) => i * 100);
-  const labelled = [0, ...BANDS.map((band) => band.max).filter((max) => max < scale), scale];
-  // Sur mobile, la règle est courte : seuls 0, la borne de fin de la tranche
-  // et le rayon restent chiffrés (la borne de début est dans le titre), les
-  // autres repères gardent leur trait.
-  const keptOnMobile = new Set([0, to, scale]);
-
-  return (
-    <span aria-hidden className="relative mb-0.5 block h-7 min-w-0 flex-1">
-      {labelled.map((meters, index) => (
-        <span
-          key={meters}
-          className={cn(
-            "absolute top-0 whitespace-nowrap font-sans text-[11px] font-normal leading-none tabular-nums",
-            index === 0 ? "translate-x-0" : index === labelled.length - 1 ? "-translate-x-full" : "-translate-x-1/2",
-            meters === from || meters === to ? "text-primary" : "text-muted-foreground",
-            !keptOnMobile.has(meters) && "hidden md:block"
-          )}
-          style={{ left: at(meters) }}
-        >
-          {rulerLabel(meters)}
-        </span>
-      ))}
-      <span className="absolute inset-x-0 bottom-0 h-px bg-input" />
-      {ticks.map((meters) => (
-        <span
-          key={meters}
-          className={cn(
-            "absolute bottom-0 w-px bg-input",
-            labelled.includes(meters) ? "h-3" : "h-1.5"
-          )}
-          style={{ left: at(meters) }}
-        />
-      ))}
-      <span
-        className="absolute bottom-0 h-1 bg-primary"
-        style={{ left: at(from), width: `calc(${at(to)} - ${at(from)})` }}
-      />
-    </span>
-  );
-}
-
 export function RestaurantResults({
   restaurants,
   ville,
-  radius,
 }: {
   restaurants: RestaurantSummary[];
   ville: string;
-  /** Rayon de recherche en mètres, fin de la règle graduée. */
-  radius: number;
 }) {
   const [filters, setFilters] = useState<Filters>(DEFAULT_FILTERS);
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
@@ -214,7 +154,6 @@ export function RestaurantResults({
     const min = BANDS[index - 1]?.max ?? 0;
     return {
       ...band,
-      min,
       items: visible.filter((r) => r.distance >= min && r.distance < band.max),
     };
   }).filter((band) => band.items.length > 0);
@@ -427,9 +366,8 @@ export function RestaurantResults({
 
             {bands.map((band) => (
               <section key={band.label} aria-label={band.label}>
-                <h3 className="flex items-end gap-4 px-3 pb-1.5 pt-6 font-display text-lg font-semibold leading-none text-primary md:gap-6 md:px-4">
-                  <span className="shrink-0 pb-0.5">{band.label}</span>
-                  <DistanceRuler from={band.min} to={Math.min(band.max, radius)} radius={radius} />
+                <h3 className="px-3 pb-1.5 pt-6 font-display text-lg font-semibold leading-none text-primary md:px-4">
+                  {band.label}
                 </h3>
                 <ol>
                   {band.items.map((restaurant) => (

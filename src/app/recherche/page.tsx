@@ -145,7 +145,7 @@ export default async function RecherchePage(props: PageProps<"/recherche">) {
           </p>
         </div>
       ) : (
-        <RestaurantResults restaurants={summaries} ville={ville} radius={radius} />
+        <RestaurantResults restaurants={summaries} ville={ville} />
       )}
     </Shell>
   );
