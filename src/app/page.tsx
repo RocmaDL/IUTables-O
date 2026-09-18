@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { CitySearchForm } from "@/components/city-search-form";
 import { StatusMark, type StatusTone } from "@/components/opening-status";
 import { KIND_ICONS } from "@/lib/kind-icons";
@@ -30,7 +29,7 @@ export default function Home() {
       <section
         id="recherche"
         aria-labelledby="titre-accueil"
-        className="mx-auto grid max-w-7xl scroll-mt-4 gap-14 px-4 pb-16 pt-10 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16 md:px-8 md:pb-24 md:pt-20"
+        className="mx-auto grid max-w-7xl scroll-mt-4 gap-10 px-4 pb-16 pt-8 sm:gap-14 sm:pt-10 md:grid-cols-[minmax(0,7fr)_minmax(0,5fr)] md:gap-16 md:pb-24 md:pt-20 md:px-8"
       >
         <div>
           <h1
@@ -44,7 +43,7 @@ export default function Home() {
               site couvre doit se voir avant même le paragraphe d'intro
               (retour de tests utilisateurs : trop petit et trop tardif
               auparavant pour rivaliser avec le reste de la page). */}
-          <ul className="mt-6 flex flex-wrap gap-3">
+          <ul className="mt-5 flex flex-wrap gap-3 sm:mt-6">
             {KINDS.map((kind) => {
               const Icon = KIND_ICONS[kind];
               return (
@@ -58,7 +57,7 @@ export default function Home() {
             })}
           </ul>
 
-          <p className="mt-6 max-w-[36rem] text-lg leading-relaxed text-muted-foreground">
+          <p className="mt-4 max-w-[36rem] text-lg leading-relaxed text-muted-foreground sm:mt-6">
             Cherchez une ville, IUTables&rsquo;O interroge OpenStreetMap en
             direct et vous montre les restaurants sur place : cuisine, régime
             alimentaire, accessibilité, horaires.
@@ -69,40 +68,31 @@ export default function Home() {
             size="lg"
             showLabel
             placeholder="Rennes, Strasbourg, Nice…"
-            className="mt-10"
+            className="mt-6 sm:mt-10"
           />
         </div>
 
-        <section aria-labelledby="villes" className="self-start">
-          <div className="flex items-baseline justify-between border-b border-input px-3 pb-2 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
-            <h2 id="villes" className="font-sans">
-              Quelques villes
-            </h2>
-            <span aria-hidden className="pr-9">
-              Dépt
-            </span>
-          </div>
-          <ul>
+        {/* Nuage de villes plutôt qu'un tableau : des puces, pas des lignes
+            zébrées ni de nombre aligné à droite. Repéré par une critique
+            utilisateur, 18/09/2026 : même allégée, une liste tabulaire à
+            cette place se lisait comme un panneau de gare avant de se
+            lire comme un raccourci de recherche. */}
+        <section aria-labelledby="villes">
+          <h2
+            id="villes"
+            className="text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground"
+          >
+            Quelques villes
+          </h2>
+          <ul className="mt-4 flex flex-wrap gap-2.5">
             {VILLES_SUGGEREES.map(({ nom, departement }) => (
-              <li key={nom} className="border-b border-border even:bg-row-alt">
+              <li key={nom}>
                 <Link
                   href={`/recherche?ville=${encodeURIComponent(nom)}`}
-                  className="group grid min-h-12 grid-cols-[minmax(0,1fr)_auto_1.5rem] items-center gap-3 px-3 outline-offset-[-2px] transition-colors duration-150 hover:bg-accent"
+                  className="inline-flex min-h-11 items-center rounded-md border border-input px-4 font-display text-lg font-semibold leading-none tracking-[-0.01em] transition-colors duration-150 hover:border-primary hover:text-primary"
                 >
-                  <span className="font-display text-2xl font-semibold leading-none tracking-[-0.01em] transition-colors duration-150 group-hover:text-primary">
-                    {nom}
-                  </span>
-                  {/* Texte nu, sans case : réservée aux distances des
-                      résultats, cette case ne doit pas se répéter ici. */}
-                  <span className="font-sans text-sm font-medium tabular-nums text-muted-foreground">
-                    <span className="sr-only">, département </span>
-                    {departement}
-                  </span>
-                  <ArrowRight
-                    className="size-5 -translate-x-1 text-primary opacity-0 transition-[opacity,transform] duration-200 ease-out group-hover:translate-x-0 group-hover:opacity-100 group-focus-visible:translate-x-0 group-focus-visible:opacity-100"
-                    strokeWidth={2.5}
-                    aria-hidden
-                  />
+                  {nom}
+                  <span className="sr-only">, département {departement}</span>
                 </Link>
               </li>
             ))}
