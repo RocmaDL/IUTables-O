@@ -5,12 +5,13 @@ import { USER_AGENT } from "./http";
 import type { GeocodedPlace, LiveRestaurant, OsmType, PlaceKind } from "./types";
 
 // Instances publiques essayées dans l'ordre. Chacune a ses mauvais moments
-// (429, 504, connexions coupées) : en enchaîner trois évite d'afficher une
-// erreur pour un pic de charge sur l'une d'elles.
+// (429, 504, connexions coupées) : en enchaîner plusieurs évite d'afficher
+// une erreur pour un pic de charge sur l'une d'elles.
 const OVERPASS_ENDPOINTS = [
   "https://overpass-api.de/api/interpreter",
   "https://overpass.private.coffee/api/interpreter",
   "https://maps.mail.ru/osm/tools/overpass/api/interpreter",
+  "https://overpass.osm.ch/api/interpreter",
 ];
 
 // Délai côté Overpass (secondes) et délai par tentative (millisecondes) :

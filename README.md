@@ -12,9 +12,9 @@ reconstruit en Next.js. L'ancien code est archivé dans
 
 ## Ce que fait le site
 
-- **Recherche par ville.** Nominatim trouve la commune, puis Overpass liste
-  les restaurants, fast-foods et cafés dans un rayon de 500 m à 1,5 km
-  autour du centre, triés par distance.
+- **Recherche par ville.** Nominatim trouve la commune, puis
+  Overpass liste les restaurants, fast-foods et cafés dans un rayon de
+  500 m à 1,5 km autour du centre, triés par distance.
 - **Filtres** sur les résultats déjà chargés : type d'adresse, cuisine,
   ouvert maintenant, végétarien, vegan, accès fauteuil roulant, à emporter.
 - **Statut d'ouverture** calculé à chaque requête depuis le tag
@@ -102,8 +102,8 @@ Aucune variable d'environnement n'est requise (`UNSPLASH_ACCESS_KEY` dans
    `prebuild`, qui copie MapLibre avant `next build`).
 2. Nœud 20.9 ou plus récent (voir `engines` dans `package.json`).
 3. Les pages `/recherche` et `/restaurant/[osmId]` déclarent
-   `export const maxDuration = 60` : Nominatim (deux essais, 8 s chacun) puis
-   Overpass (jusqu'à 42 s) peuvent dépasser la limite par défaut d'une
+   `export const maxDuration = 60` : Nominatim (deux essais,
+   8 s chacun) puis Overpass (jusqu'à 42 s) peuvent dépasser la limite par défaut d'une
    fonction (10 s sur l'offre Hobby). Vérifiez le plafond autorisé par votre
    offre Vercel si le déploiement refuse cette valeur.
 4. Vérifier les déploiements de prévisualisation sur chaque pull request.
@@ -113,9 +113,9 @@ Aucune variable d'environnement n'est requise (`UNSPLASH_ACCESS_KEY` dans
 - Les données dépendent des contributeurs OpenStreetMap : horaires, régime
   alimentaire ou accessibilité manquent souvent. Les filtres n'affichent que
   les adresses renseignées.
-- **Limites de débit des API publiques.** Nominatim tolère 1 requête par
-  seconde ; largement suffisant ici (une recherche = un appel, mis en cache
-  24 h). Overpass est plus sensible : toutes les recherches du site passent
+- **Limites de débit des API publiques.** Nominatim tolère
+  1 requête par seconde ; largement suffisant ici (une recherche = un appel,
+  mis en cache 24 h). Overpass est plus sensible : toutes les recherches du site passent
   par le serveur, jamais par le navigateur du visiteur, donc c'est une seule
   adresse IP (celle du serveur, pas celle de chaque visiteur) qui envoie
   toutes les requêtes vers ses instances publiques. Un usage normal

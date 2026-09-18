@@ -39,6 +39,13 @@ async function fetchNominatim(url: URL): Promise<Response> {
  * Cherche une commune française. Renvoie `null` si aucune ne correspond,
  * lève `GeocodingUnavailableError` si le service ne répond pas après deux
  * essais : les deux cas appellent des messages différents côté interface.
+ *
+ * Testé face à la Base Adresse Nationale (17/09/2026) : la BAN est plus
+ * rapide, mais son point pour une commune est celui de la mairie, parfois
+ * à 1-3 km du centre historique/commercial (Orléans : 256 → 31 résultats
+ * sur le même rayon). Le nœud Nominatim, placé à la main par les
+ * contributeurs OSM sur la plupart des villes bien cartographiées, reste
+ * mieux choisi pour « trouver ce qui est proche du centre ».
  */
 export async function geocodeCity(query: string): Promise<GeocodedPlace | null> {
   const url = new URL("https://nominatim.openstreetmap.org/search");

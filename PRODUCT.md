@@ -58,6 +58,14 @@ manque, et renvoie vers la fiche OSM pour la corriger.
   la maquiller.
 - Pas de photos : Unsplash n'est pas branché, et l'identité visuelle ne
   s'appuie pas sur la photographie (décision du 17/09/2026).
+- Géocodage : Nominatim reste la source, malgré sa fiabilité inférieure à
+  la Base Adresse Nationale (BAN) de l'État. Testée puis abandonnée le
+  17/09/2026 : le point que la BAN renvoie pour une commune est celui de sa
+  mairie, parfois à 1-3 km du centre historique/commercial — sur Orléans,
+  ça fait tomber les résultats de 256 à 31 sur le même rayon. Le nœud
+  Nominatim, placé à la main par les contributeurs OSM, reste mieux choisi
+  pour « trouver ce qui est proche du centre ». Ne pas re-basculer sans
+  revérifier ce point précis.
 - MapLibre servi depuis `public/vendor/` (voir README).
 - Attribution OpenStreetMap (licence ODbL) obligatoire.
 

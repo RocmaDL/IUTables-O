@@ -69,6 +69,23 @@ données live via des API publiques gratuites, déploiement Vercel.
 - [x] `.gitignore` : `.env.example` n'était plus versionné, `public/vendor/`
       ignoré
 
+### Session du 17 septembre 2026 (suite) — refonte visuelle et robustesse
+
+- [x] Refonte « tableau des départs » (voir DESIGN.md et
+      `.impeccable/surfaces/`), skill Impeccable, revue indépendante
+- [x] Défilement infini (IntersectionObserver) à la place du bouton
+      « Afficher plus » dans la liste de résultats
+- [x] Overpass : nouvel essai sur 429/5xx/remarque de dépassement (pas
+      seulement une connexion coupée), délai relevé à 25 s par requête,
+      budget total 42 s, 4ᵉ instance ajoutée (`overpass.osm.ch`)
+- [x] `maxDuration = 60` sur `/recherche` et `/restaurant/[osmId]`
+      (limite d'exécution des fonctions Vercel)
+- [x] Essai de remplacement de Nominatim par la Base Adresse Nationale
+      (plus rapide, aucune clé), abandonné : son point pour une commune
+      est celui de la mairie, parfois à 1-3 km du centre historique —
+      256 → 31 résultats sur Orléans avec le même rayon. Détail dans
+      PRODUCT.md, section Capabilities and Constraints
+
 ## À faire
 
 ### Outillage (à faire à la main)
@@ -113,7 +130,7 @@ données live via des API publiques gratuites, déploiement Vercel.
 | Session PHP + mdp en clair | Aucun compte utilisateur |
 | HTML statique + JS inline | Composants React + Tailwind CSS v4 |
 | Bootstrap 5 générique | shadcn/ui personnalisé |
-| Dataset statique Orléans (382 restaurants) | Recherche nationale live (Nominatim + Overpass) |
+| Dataset statique Orléans (382 restaurants) | Recherche nationale live (BAN + Overpass) |
 | Hébergement manuel | Vercel |
 | Carte Leaflet | MapLibre GL JS + OpenFreeMap |
 | — | API Unsplash (photos), pas encore branchée |
