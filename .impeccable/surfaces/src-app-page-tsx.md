@@ -5,7 +5,7 @@ primary_target: "src/app/page.tsx"
 related_targets: ["src/app/recherche/page.tsx","src/app/restaurant/[osmId]/page.tsx"]
 ---
 
-# Surface : application IUTables'O (accueil, résultats, fiche, pages annexes)
+# Surface : application LesTables (accueil, résultats, fiche, pages annexes)
 
 Mode : Operate. Le visiteur cherche une table ; le recruteur de passage voit le soin, jamais au détriment de la tâche.
 

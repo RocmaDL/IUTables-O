@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "À propos",
   description:
-    "Comment IUTables'O trouve des restaurants dans toute la France, et pourquoi les données sont parfois incomplètes.",
+    "Comment LesTables trouve des restaurants dans toute la France, et pourquoi les données sont parfois incomplètes.",
 };
 
 const linkClass =
@@ -19,7 +19,7 @@ export default function AProposPage() {
 
         <div className="max-w-[65ch] space-y-6 text-lg leading-[1.7] text-foreground/90 md:pt-3">
           <p>
-            IUTables&rsquo;O n&rsquo;a pas sa propre base de restaurants.
+            LesTables n&rsquo;a pas sa propre base de restaurants.
             Chaque recherche retrouve la commune puis liste les
             établissements autour via{" "}
             <a

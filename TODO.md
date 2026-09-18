@@ -1,4 +1,4 @@
-# TODO — IUTables'O nouvelle version
+# TODO — LesTables nouvelle version
 
 Projet vitrine (portfolio) : recherche de restaurants sur toute la France,
 sans compte utilisateur ni backend applicatif. Next.js + shadcn/ui + Tailwind,

@@ -1,4 +1,4 @@
-# IUTables'O
+# LesTables
 
 Recherche de restaurants dans n'importe quelle commune française, à partir
 des données ouvertes d'OpenStreetMap. Pas de base de données ni de compte

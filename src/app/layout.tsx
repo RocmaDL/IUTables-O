@@ -17,17 +17,17 @@ const sofiaSansCondensed = Sofia_Sans_Condensed({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://iutableso.vercel.app"),
+  metadataBase: new URL("https://lestables.vercel.app"),
   title: {
-    default: "IUTables'O — trouver un resto, où que vous soyez en France",
-    template: "%s — IUTables'O",
+    default: "LesTables — trouver un resto, où que vous soyez en France",
+    template: "%s — LesTables",
   },
   description:
-    "IUTables'O recense les restaurants de toutes les villes de France : cuisine, régime alimentaire, accessibilité PMR, horaires. Cherchez une ville, trouvez une table.",
+    "LesTables recense les restaurants de toutes les villes de France : cuisine, régime alimentaire, accessibilité PMR, horaires. Cherchez une ville, trouvez une table.",
   openGraph: {
     type: "website",
     locale: "fr_FR",
-    siteName: "IUTables'O",
+    siteName: "LesTables",
   },
 };
 

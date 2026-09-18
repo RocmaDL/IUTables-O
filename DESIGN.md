@@ -1,5 +1,5 @@
 ---
-name: IUTables'O
+name: LesTables
 description: Les restaurants autour du centre de n'importe quelle commune française, lus comme un tableau des départs.
 colors:
   nuit-afficheur: "#0a1430"
@@ -123,7 +123,7 @@ components:
     height: "44px"
 ---
 
-# Design System: IUTables'O
+# Design System: LesTables
 
 ## Overview
 
@@ -139,7 +139,7 @@ Le système refuse deux voisins directs : la grille de cartes avec plan à droit
 - Un seul fond bleu nuit, profondeur par paliers de luminosité, jamais par ombre.
 - Jaune afficheur réservé à l'instant présent et à l'action.
 - Sofia Sans Condensed pour tout ce qui s'affiche au tableau, Sofia Sans pour la prose et les contrôles.
-- Case « voie » blanche pour les nombres de repérage (distance, département, le « O » du logotype).
+- Case « voie » blanche pour les nombres de repérage (distance, département).
 - Chaque état porte un libellé et un pictogramme ; la couleur ne fait que confirmer.
 - Palettes à bascule comme unique mouvement signature.
 
@@ -148,7 +148,7 @@ Le système refuse deux voisins directs : la grille de cartes avec plan à droit
 Une nuit bleue saturée en paliers serrés, un blanc légèrement froid, un seul jaune franc et trois couleurs de statut pastel lisibles sur fond sombre.
 
 ### Primary
-- **Jaune afficheur** (jaune-afficheur) : l'heure de Paris, l'anneau de focus (2 px, décalé de 2 px), `::selection`, le curseur de saisie, le bouton principal, le soulignement du champ de l'accueil, le type d'adresse sélectionné, le commutateur actif, le titre et le segment de la tranche de distance courante, la plage horaire du jour et sa pastille « aujourd'hui ». Contraste mesuré 12,6:1 sur le fond.
+- **Jaune afficheur** (jaune-afficheur) : l'heure de Paris, l'anneau de focus (2 px, décalé de 2 px), `::selection`, le curseur de saisie, le bouton principal, le soulignement du champ de l'accueil, le type d'adresse sélectionné, le commutateur actif, le titre de la tranche de distance courante, la plage horaire du jour et sa pastille « aujourd'hui ». Contraste mesuré 12,6:1 sur le fond.
 - **Jaune afficheur éclairci** (jaune-afficheur-survol) : survol du bouton principal et du bouton de recherche, nulle part ailleurs.
 
 ### Secondary
@@ -202,7 +202,7 @@ Conteneur de 80rem (max-w-7xl) centré, marges de 16 px sur mobile et 32 px à p
 
 Les compositions sont asymétriques : accueil 7/5 (titre et saisie à gauche, villes suggérées en lignes de tableau à droite, calées en bas), légende 4/8, fiche 7/5 avec plan collant à droite, à propos 5/7 avec titre collant. Les résultats placent une colonne de filtres de 15rem, collante, à gauche du tableau (écart de 48 px, 64 px en grand écran).
 
-La ligne du tableau est une grille nommée. Sur mobile : nom et distance, puis métadonnées, statut et services empilés. À partir de 768 px : trois colonnes (établissement, statut de 11.5rem, distance de 5.5rem), alignées sur la rangée d'en-têtes de colonnes. Les lignes font 14 px de marge verticale (16 px desktop) et sont regroupées par tranches de distance (moins de 250 m, 250 à 500 m, 500 m à 1 km, au-delà), chacune ouverte par un titre jaune suivi d'une règle graduée (un trait tous les 100 m, bornes chiffrées, segment jaune de 4 px pour la tranche). Sur mobile, la règle ne chiffre que 0, la borne de fin de la tranche et le rayon.
+La ligne du tableau est une grille nommée. Sur mobile : nom et distance, puis métadonnées, statut et services empilés. À partir de 768 px : trois colonnes (établissement, statut de 11.5rem, distance de 5.5rem), alignées sur la rangée d'en-têtes de colonnes. Les lignes font 14 px de marge verticale (16 px desktop) et sont regroupées par tranches de distance (moins de 250 m, 250 à 500 m, 500 m à 1 km, au-delà), chacune ouverte par un simple titre jaune. Pas de règle graduée : retirée le 18/09/2026, jugée trop chargée pour une liste déjà triée par distance.
 
 Sur mobile, les filtres se replient derrière un bouton contour « Filtrer » posé sur la même ligne que le compteur, pour que les premières adresses tiennent dans le premier écran. Toutes les cibles tactiles font au moins 44 px (lignes de ville 56 px, commutateurs 48 px). Testé à 390 px.
 
@@ -234,7 +234,7 @@ Carrés, pleins, sans fioriture.
 - **Bouton de recherche:** carré jaune de 44 px (56 px sur l'accueil) avec une flèche Lucide, collé au soulignement du champ.
 
 ### Case voie
-La signature typographique : un rectangle blanc afficheur, texte nuit en Sofia Sans Condensed grasse à chiffres tabulaires, angles de 3 px. Distance d'une ligne (hauteur 32 px, largeur minimale 4.5rem), numéro de département (28 px), exemple dans la légende (24 px), et le « O » final du logotype. Elle ne porte que des nombres de repérage ou ce « O ».
+La signature typographique : un rectangle blanc afficheur, texte nuit en Sofia Sans Condensed grasse à chiffres tabulaires, angles de 3 px. Distance d'une ligne (hauteur 32 px, largeur minimale 4.5rem), numéro de département (28 px), exemple dans la légende (24 px). Elle ne porte que des nombres de repérage.
 
 ### Chips (pastilles de service)
 - **Style:** contour filet de champ, fond transparent, texte blanc en 0.75rem, angles de 2 px, marge de 2 px sur 6 px.
@@ -257,7 +257,7 @@ Un vocabulaire fermé de cinq états, chacun avec libellé et pictogramme Lucide
 Rangées libellées de 48 px séparées par des filets. Le commutateur mesure 40 × 24 px, angles de 3 px ; éteint : contour filet de champ et plot de 16 px en filet de champ à gauche ; allumé : fond jaune et plot nuit à droite, glissement de 200 ms en `cubic-bezier(0.16, 1, 0.3, 1)`. Le libellé passe en 600 quand le filtre est actif. Le filtre de type est une liste de boutons pleine largeur avec compteur condensé ; la sélection est un fond jaune plein.
 
 ### Navigation
-Bandeau fermé par un filet : logotype condensé à gauche (« IUTables' » plus le « O » en case voie), liens en bleu-gris 0.875rem qui passent au blanc au survol, cibles de 44 px, puis l'horloge de Paris séparée par un filet vertical (libellé « Paris » en 0.75rem, heure en condensé jaune tabulaire). Sur mobile, seul « À propos » reste et l'horloge disparaît. Pied de page : attribution OpenStreetMap et lien « D'où viennent les données », liens blancs soulignés en filet de champ, soulignement jaune au survol.
+Bandeau fermé par un filet : logotype condensé à gauche (pictogramme couverts croisés puis « LesTables » en texte plein, sans case voie), liens en bleu-gris 0.875rem qui passent au blanc au survol, cibles de 44 px, puis l'horloge de Paris séparée par un filet vertical (libellé « Paris » en 0.75rem, heure en condensé jaune tabulaire), affichée seulement sur les pages recherche et fiche. Sur mobile, seul « À propos » reste et l'horloge disparaît. Pied de page : attribution OpenStreetMap et lien « D'où viennent les données », liens blancs soulignés en filet de champ, soulignement jaune au survol.
 
 ### Palettes à bascule (signature)
 Le texte s'affiche en cases de 0.66 × 1.12 em, en capitales. Chaque case contient une bande verticale de trois lettres de passage puis la lettre finale, déjà calée sur la lettre finale sans animation : le texte n'attend jamais le mouvement et reste lu par les lecteurs d'écran via une copie masquée. À l'arrivée, la bande roule en 210 ms par trois crans, avec un décalage légèrement irrégulier par lettre plafonné pour finir sous 700 ms. En mode attente (« Recherche »), les cases défilent en boucle. Coupé sous `prefers-reduced-motion`. Utilisé pour le nom de la ville des résultats, le compteur d'adresses et l'écran de chargement, pas ailleurs.

@@ -58,7 +58,7 @@ export default function Home() {
           </ul>
 
           <p className="mt-4 max-w-[36rem] text-lg leading-relaxed text-muted-foreground sm:mt-6">
-            Cherchez une ville, IUTables&rsquo;O interroge OpenStreetMap en
+            Cherchez une ville, LesTables interroge OpenStreetMap en
             direct et vous montre les restaurants sur place : cuisine, régime
             alimentaire, accessibilité, horaires.
           </p>

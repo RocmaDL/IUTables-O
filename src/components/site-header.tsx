@@ -27,7 +27,7 @@ export function SiteHeader() {
           className="flex min-h-11 items-center gap-2 rounded-md pr-2 font-display text-2xl font-bold leading-none tracking-[-0.01em]"
         >
           <UtensilsCrossed className="size-5 shrink-0 text-primary" strokeWidth={2.5} aria-hidden />
-          IUTables&rsquo;O
+          LesTables
         </Link>
 
         <div className="flex items-center gap-2 md:gap-6">

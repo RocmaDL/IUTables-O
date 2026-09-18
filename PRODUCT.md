@@ -80,8 +80,8 @@ manque, et renvoie vers la fiche OSM pour la corriger.
 
 ## Brand Commitments
 
-- Nom : IUTables'O (clin d'œil à l'IUT d'Orléans, origine scolaire du
-  projet).
+- Nom : LesTables (jusqu'au 18/09/2026 : IUTables'O, clin d'œil à l'IUT
+  d'Orléans, origine scolaire du projet).
 - Interface entièrement en français, ton direct et concret.
 - La palette brique/vert sur fond crème et le couple Fraunces/Work Sans de
   la version précédente ne sont plus des engagements : l'auteur a demandé
