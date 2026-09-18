@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { OpeningStatusLine } from "@/components/opening-status";
 import { formatDistance, isYes, KIND_LABELS, labelCuisine } from "@/lib/labels";
+import { KIND_ICONS } from "@/lib/kind-icons";
 import type { RestaurantSummary } from "@/lib/geo/types";
 
 /**
@@ -17,9 +18,8 @@ export function RestaurantRow({
   ville: string;
 }) {
   const cuisines = restaurant.cuisine.slice(0, 3).map(labelCuisine).join(", ");
-  const meta = [KIND_LABELS[restaurant.kind], cuisines, restaurant.address]
-    .filter(Boolean)
-    .join(" · ");
+  const meta = [cuisines, restaurant.address].filter(Boolean).join(" · ");
+  const KindIcon = KIND_ICONS[restaurant.kind];
 
   const services = [
     isYes(restaurant.vegan) ? "Vegan" : isYes(restaurant.vegetarian) && "Végétarien",
@@ -40,9 +40,12 @@ export function RestaurantRow({
         </Link>
       </h4>
 
-      {meta && (
-        <p className="mt-1 text-sm leading-snug text-muted-foreground [grid-area:meta]">{meta}</p>
-      )}
+      <p className="mt-1 flex items-center gap-1.5 text-sm leading-snug text-muted-foreground [grid-area:meta]">
+        <KindIcon className="size-[15px] shrink-0" strokeWidth={2.25} aria-hidden />
+        {KIND_LABELS[restaurant.kind]}
+        {meta && <span aria-hidden>·</span>}
+        {meta}
+      </p>
 
       <OpeningStatusLine
         status={restaurant.status}

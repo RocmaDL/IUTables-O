@@ -14,6 +14,7 @@ import {
 import { RestaurantRow } from "@/components/restaurant-row";
 import { SplitFlap } from "@/components/split-flap";
 import { formatDistance, isYes, KIND_LABELS, labelCuisine } from "@/lib/labels";
+import { KIND_ICONS } from "@/lib/kind-icons";
 import type { PlaceKind, RestaurantSummary } from "@/lib/geo/types";
 
 const PAGE_SIZE = 24;
@@ -284,6 +285,7 @@ export function RestaurantResults({
             <div className="grid gap-1">
               {KINDS.map((kind) => {
                 const selected = filters.kind === kind;
+                const Icon = kind === ALL ? null : KIND_ICONS[kind];
                 return (
                   <button
                     key={kind}
@@ -298,7 +300,10 @@ export function RestaurantResults({
                         : "text-foreground hover:bg-accent"
                     )}
                   >
-                    {kind === ALL ? "Tout" : KIND_LABELS[kind]}
+                    <span className="inline-flex items-center gap-2">
+                      {Icon && <Icon className="size-4 shrink-0" strokeWidth={2.25} aria-hidden />}
+                      {kind === ALL ? "Tout" : KIND_LABELS[kind]}
+                    </span>
                     <span
                       className={cn(
                         "font-display text-lg tabular-nums",

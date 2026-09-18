@@ -18,6 +18,7 @@ import {
 } from "@/lib/geo/overpass";
 import { getOpeningStatus, getWeekSchedule, parisWallClock } from "@/lib/opening-hours";
 import { KIND_LABELS, labelCuisine, labelYesNo } from "@/lib/labels";
+import { KIND_ICONS } from "@/lib/kind-icons";
 import type { LiveRestaurant } from "@/lib/geo/types";
 
 // Voir la même constante dans /recherche : Nominatim + Overpass peuvent
@@ -132,6 +133,7 @@ export default async function RestaurantPage({ params, searchParams }: Props) {
   const tone = toneOf(status);
 
   const cuisines = restaurant.cuisine.map(labelCuisine).join(", ");
+  const KindIcon = KIND_ICONS[restaurant.kind];
   const phone = restaurant.phone?.split(";")[0].trim() ?? null;
   const website = restaurant.website ? externalUrl(restaurant.website) : null;
   const locality = [restaurant.postcode, restaurant.city].filter(Boolean).join(" ");
@@ -157,7 +159,8 @@ export default async function RestaurantPage({ params, searchParams }: Props) {
           <h1 className="font-display text-[clamp(2.5rem,6vw,5rem)] font-bold leading-[0.95] tracking-[-0.02em]">
             {restaurant.name}
           </h1>
-          <p className="mt-4 text-lg text-muted-foreground">
+          <p className="mt-4 flex items-center gap-2 text-lg text-muted-foreground">
+            <KindIcon className="size-5 shrink-0" strokeWidth={2.25} aria-hidden />
             {KIND_LABELS[restaurant.kind]}
             {cuisines && ` · ${cuisines}`}
           </p>

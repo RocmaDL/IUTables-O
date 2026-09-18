@@ -2,6 +2,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { CitySearchForm } from "@/components/city-search-form";
 import { StatusMark, type StatusTone } from "@/components/opening-status";
+import { KIND_ICONS } from "@/lib/kind-icons";
+import { KIND_LABELS } from "@/lib/labels";
+import type { PlaceKind } from "@/lib/geo/types";
 
 // Le numéro de département tient la place du numéro de voie.
 const VILLES_SUGGEREES = [
@@ -14,6 +17,8 @@ const VILLES_SUGGEREES = [
   { nom: "Nantes", departement: "44" },
   { nom: "Orléans", departement: "45" },
 ];
+
+const KINDS: PlaceKind[] = ["restaurant", "fast_food", "cafe"];
 
 const LEGENDE: { tone: StatusTone; texte: string }[] = [
   { tone: "open", texte: "D’après les horaires saisis sur OpenStreetMap, à l’heure de Paris." },
@@ -42,6 +47,23 @@ export default function Home() {
             direct et vous montre les restaurants sur place : cuisine, régime
             alimentaire, accessibilité, horaires.
           </p>
+
+          {/* Trois catégories, icône + mot : la première chose qu'on doit
+              comprendre en arrivant, retour de tests utilisateurs. */}
+          <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-2">
+            {KINDS.map((kind) => {
+              const Icon = KIND_ICONS[kind];
+              return (
+                <li
+                  key={kind}
+                  className="inline-flex items-center gap-2 text-base font-medium text-foreground"
+                >
+                  <Icon className="size-[18px] text-primary" strokeWidth={2.25} aria-hidden />
+                  {KIND_LABELS[kind]}
+                </li>
+              );
+            })}
+          </ul>
 
           <CitySearchForm
             id="ville-accueil"
