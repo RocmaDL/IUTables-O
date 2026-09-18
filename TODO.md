@@ -86,11 +86,17 @@ données live via des API publiques gratuites, déploiement Vercel.
       est celui de la mairie, parfois à 1-3 km du centre historique —
       256 → 31 résultats sur Orléans avec le même rayon. Détail dans
       PRODUCT.md, section Capabilities and Constraints
-- [ ] Retour de tests utilisateurs : site pas identifié comme un
+- [x] Retour de tests utilisateurs : site pas identifié comme un
       outil de recherche de restaurants (manque de vocabulaire/icônes) —
-      corrigé le même jour (favicon, `src/lib/kind-icons.ts`, icônes sur
-      l'accueil/filtres/résultats/fiche). Voir si un nouveau test confirme,
-      sinon retravailler le H1 et l'esthétique tableau de gare elle-même
+      favicon et `src/lib/kind-icons.ts` (icônes sur l'accueil/filtres/
+      résultats/fiche) ne suffisaient pas : un nouveau test a confirmé le
+      même problème. Deux critiques dual-agent (`.impeccable/critique/`,
+      18/09/2026, 18/28 puis 21/28) ont isolé la cause : l'esthétique
+      « tableau de gare » de l'accueil (horloge, case voie, liste de
+      villes tabulaire) primait sur le signal restaurant. Corrigé :
+      horloge et case voie retirées de l'accueil (gardées sur
+      recherche/fiche, où elles ont un sens réel), icône Sandwich →
+      Hamburger, liste de villes en nuage de puces sans numéro visible
 
 ### Session du 18 septembre 2026 — migration Geoapify
 
